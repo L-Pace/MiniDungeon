@@ -8,7 +8,7 @@ namespace MiniDungeon
         {
             bool mainLoop = true;
             int playerChoice = 0;
-
+           
 
             Console.WriteLine("Welcome to the Mini Dungeon!!!");
             Console.WriteLine("");
