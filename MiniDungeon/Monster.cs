@@ -27,5 +27,14 @@ namespace MiniDungeon
 
             LootTable = new List<LootItem>();
         }
+
+        public Monster CloneMonster()
+        {
+            Monster monster = new Monster(ID, Name, MaximumDamage, MaximumProtection, RewardExperiencePoints, RewardGold, CurrentHitPoints, MaximumHitPoints);
+
+            monster.LootTable = LootTable;
+
+            return monster;
+        }
     }
 }

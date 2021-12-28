@@ -7,7 +7,7 @@ namespace MiniDungeon
     class Character
     {
 
-        Player newPlayer = new Player(0, 20, 0.0F, 0, 1);
+        public Player newPlayer = new Player(0, 0, 0, 0, 0);
 
         PlayerRace playerRace;
         PlayerClass playerClass;
@@ -25,19 +25,25 @@ namespace MiniDungeon
             int playerClassInt = 0;
             bool insertLoop = true;
 
-            newPlayer.Gold = 20;
+            newPlayer.Gold = 20.0f;
             newPlayer.ExperiencePoints = 0;
             newPlayer.Level = 1;
 
 
             while (insertLoop)
             {
+                Console.Clear();
+                Console.WriteLine("   ********************");
+                Console.WriteLine("    CHARACTER CREATION");
+                Console.WriteLine("   ********************");
+                Console.WriteLine();
+
                 Console.WriteLine("Insert your name: ");
                 Console.Write(":> ");
                 playerName = Console.ReadLine();
                 if (GetConfirmation(playerName))
                 {
-                    newPlayer.PlayerName = playerName.ToString() ;
+                    newPlayer.PlayerName = playerName.ToString();
                     insertLoop = false;
                 }
             }
@@ -46,19 +52,19 @@ namespace MiniDungeon
             insertLoop = true;
             Console.Clear();
 
+            Console.WriteLine("You have 4 available races. Chose a number in correspondence of the race that you like!");
+            Console.WriteLine();
+            Console.WriteLine("=============");
+            Console.WriteLine("| 1) Human  |");
+            Console.WriteLine("| 2) Elf    |");
+            Console.WriteLine("| 3) Dwarf  |");
+            Console.WriteLine("| 4) Orc    |");
+            Console.WriteLine("=============");
+            Console.WriteLine();
+            Console.WriteLine("Chose a race.");
+            Console.Write(":> ");
             while (insertLoop)
             {
-                Console.WriteLine("You have 4 available races. Chose a number in correspondence of the race that you like!");
-                Console.WriteLine();
-                Console.WriteLine("=============");
-                Console.WriteLine("| 1) Human  |");
-                Console.WriteLine("| 2) Elf    |");
-                Console.WriteLine("| 3) Dwarf  |");
-                Console.WriteLine("| 4) Orc    |");
-                Console.WriteLine("=============");
-                Console.WriteLine();
-                Console.WriteLine("Chose a race.");
-                Console.Write(":> ");
                 while (!int.TryParse(Console.ReadLine(), out playerRaceInt))
                 {
                     Console.WriteLine("Invalid input! Try again!");
@@ -109,10 +115,10 @@ namespace MiniDungeon
                         break;
 
                     default:
-                        Console.Clear();
 
                         Console.WriteLine("Invalid input! Try again!");
-
+                        Console.WriteLine("Chose a race");
+                        Console.Write(":> ");
                         break;
                 }
             }
@@ -120,20 +126,20 @@ namespace MiniDungeon
 
             insertLoop = true;
 
+            Console.Clear();
+            Console.WriteLine("You have 4 available classes. Chose a number in correspondence of the class that you like!");
+            Console.WriteLine();
+            Console.WriteLine("==============");
+            Console.WriteLine("| 1) Warrior |");
+            Console.WriteLine("| 2) Mage    |");
+            Console.WriteLine("| 3) Paladin |");
+            Console.WriteLine("| 4) Bard    |");
+            Console.WriteLine("==============");
+            Console.WriteLine();
+            Console.WriteLine("Chose a class.");
+            Console.Write(":> ");
             while (insertLoop)
             {
-                Console.Clear();
-                Console.WriteLine("You have 4 available classes. Chose a number in correspondence of the class that you like!");
-                Console.WriteLine();
-                Console.WriteLine("==============");
-                Console.WriteLine("| 1) Warrior |");
-                Console.WriteLine("| 2) Mage    |");
-                Console.WriteLine("| 3) Paladin |");
-                Console.WriteLine("| 4) Bard    |");
-                Console.WriteLine("==============");
-                Console.WriteLine();
-                Console.WriteLine("Chose a class.");
-                Console.Write(":> ");
                 while (!int.TryParse(Console.ReadLine(), out playerClassInt))
                 {
                     Console.WriteLine("Invalid input! Try again!");
@@ -148,7 +154,7 @@ namespace MiniDungeon
                         {
                             newPlayer.playerClass = playerClass;
                             newPlayer.CurrentHitPoints = 20;
-                            newPlayer.MaximumHitPoints = 20;                           
+                            newPlayer.MaximumHitPoints = 20;
                             insertLoop = false;
                         }
                         break;
@@ -189,13 +195,12 @@ namespace MiniDungeon
 
                     default:
                         Console.WriteLine("Invalid input! Try again!");
+                        Console.WriteLine("Chose a class.");
                         Console.Write(":> ");
-                        insertLoop = false;
+                        
                         break;
                 }
             }
-
-            PrintCharacter();
         }
 
 
@@ -229,13 +234,17 @@ namespace MiniDungeon
 
         public void PrintCharacter()
         {
-            Console.WriteLine("Your name is: " + newPlayer.PlayerName);
-            Console.WriteLine("Your race is: " + newPlayer.playerRace.ToString());
-            Console.WriteLine("Your class is: " + newPlayer.playerClass.ToString());
-            Console.WriteLine("Your level is: " + newPlayer.Level);
-            Console.WriteLine("Your starting HP are: " + newPlayer.CurrentHitPoints);
-            Console.WriteLine("You have: " + newPlayer.Gold + " gold");
-            Console.WriteLine("Your experience point are: " + newPlayer.ExperiencePoints);
+            Console.WriteLine();
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine(" Your name is: " + newPlayer.PlayerName);
+            Console.WriteLine(" Your race is: " + newPlayer.playerRace.ToString());
+            Console.WriteLine(" Your class is: " + newPlayer.playerClass.ToString());
+            Console.WriteLine(" Your level is: " + newPlayer.Level);
+            Console.WriteLine(" Your starting HP are: " + newPlayer.CurrentHitPoints);
+            Console.WriteLine(" You have: " + newPlayer.Gold + " gold");
+            Console.WriteLine(" Your experience point are: " + newPlayer.ExperiencePoints);
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
 
         }
     }

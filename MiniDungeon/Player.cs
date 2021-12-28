@@ -5,7 +5,7 @@ using System.Text;
 namespace MiniDungeon
 {
 
-    enum PlayerRace
+    public enum PlayerRace
     {
         Human = 1,
         Elf,
@@ -13,7 +13,7 @@ namespace MiniDungeon
         Orc
     }
 
-    enum PlayerClass
+    public enum PlayerClass
     {
         Warrior = 1,
         Mage,
@@ -21,7 +21,7 @@ namespace MiniDungeon
         Bard
     }
 
-    class Player : LifeForm
+    public class Player : LifeForm
     {
         public string PlayerName { get;  set; }
 
@@ -40,7 +40,6 @@ namespace MiniDungeon
         public List<InventoryItem> Inventory { get; set; }
 
         public List<PlayerQuest> Quests { get; set; }
-
 
         public Player(int currentHitPoints, int maximumHitPoints, float gold, int experiencePoints, int level) : base(currentHitPoints, maximumHitPoints)
         {
