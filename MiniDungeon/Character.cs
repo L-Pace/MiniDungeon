@@ -13,6 +13,17 @@ namespace MiniDungeon
         PlayerClass playerClass;
         string playerName;
 
+        string banner = @"
+███╗░░░███╗██╗███╗░░██╗██╗  ██████╗░██╗░░░██╗███╗░░██╗░██████╗░███████╗░█████╗░███╗░░██╗
+████╗░████║██║████╗░██║██║  ██╔══██╗██║░░░██║████╗░██║██╔════╝░██╔════╝██╔══██╗████╗░██║
+██╔████╔██║██║██╔██╗██║██║  ██║░░██║██║░░░██║██╔██╗██║██║░░██╗░█████╗░░██║░░██║██╔██╗██║
+██║╚██╔╝██║██║██║╚████║██║  ██║░░██║██║░░░██║██║╚████║██║░░╚██╗██╔══╝░░██║░░██║██║╚████║
+██║░╚═╝░██║██║██║░╚███║██║  ██████╔╝╚██████╔╝██║░╚███║╚██████╔╝███████╗╚█████╔╝██║░╚███║
+╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═╝  ╚═════╝░░╚═════╝░╚═╝░░╚══╝░╚═════╝░╚══════╝░╚════╝░╚═╝░░╚══╝";
+
+        string characterCreationBanner = @"
+█▀▀ █░█ ▄▀█ █▀█ ▄▀█ █▀▀ ▀█▀ █▀▀ █▀█   █▀▀ █▀█ █▀▀ ▄▀█ ▀█▀ █ █▀█ █▄░█
+█▄▄ █▀█ █▀█ █▀▄ █▀█ █▄▄ ░█░ ██▄ █▀▄   █▄▄ █▀▄ ██▄ █▀█ ░█░ █ █▄█ █░▀█";
         public Character()
         {
             CreateCharacter();
@@ -33,9 +44,9 @@ namespace MiniDungeon
             while (insertLoop)
             {
                 Console.Clear();
-                Console.WriteLine("   ********************");
-                Console.WriteLine("    CHARACTER CREATION");
-                Console.WriteLine("   ********************");
+                Console.WriteLine(banner);
+                Console.WriteLine();
+                Console.WriteLine(characterCreationBanner);
                 Console.WriteLine();
 
                 Console.WriteLine("Insert your name: ");
@@ -51,7 +62,10 @@ namespace MiniDungeon
 
             insertLoop = true;
             Console.Clear();
-
+            Console.WriteLine(banner);
+            Console.WriteLine();
+            Console.WriteLine(characterCreationBanner);
+            Console.WriteLine();
             Console.WriteLine("You have 4 available races. Chose a number in correspondence of the race that you like!");
             Console.WriteLine();
             Console.WriteLine("=============");
@@ -127,6 +141,10 @@ namespace MiniDungeon
             insertLoop = true;
 
             Console.Clear();
+            Console.WriteLine(banner);
+            Console.WriteLine();
+            Console.WriteLine(characterCreationBanner);
+            Console.WriteLine();
             Console.WriteLine("You have 4 available classes. Chose a number in correspondence of the class that you like!");
             Console.WriteLine();
             Console.WriteLine("==============");

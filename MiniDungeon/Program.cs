@@ -5,7 +5,7 @@ namespace MiniDungeon
     class Program
     {
         private Monster _monster;
-        private Player _player;
+        //private Player _player;
 
         static void Main(string[] args)
         {
@@ -55,7 +55,7 @@ namespace MiniDungeon
                 {
                     case 1:
 
-                        Player _player = new Player(0,0,0,0,0);
+                        Player _player = new Player(0, 0, 0, 0, 0);
 
                         NewGame(title2, _player);
 
@@ -95,70 +95,234 @@ namespace MiniDungeon
 
             Console.WriteLine(banner);
 
-            Intro();
+            //Intro();
 
             _player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
 
-            MainMenu(_player.CurrentLocation, _player, banner, character);
+            MainMenu(_player, banner, character);
 
         }
 
-        private static void MainMenu(Location newLocation, Player _player, string banner, Character character)
+        private static void MainMenu(Player _player, string banner, Character character)
         {
             string playerInput;
 
-
             while (true)
             {
-                Console.WriteLine(banner);
-                character.PrintCharacter();
 
+                Console.WriteLine(banner);
                 Console.WriteLine();
-                Console.WriteLine("Current Location: " + newLocation.Name.ToString());
-                Console.WriteLine("\n");
+                Console.WriteLine("*** CURRENT LOCATION ***"); 
+                Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
+                Console.WriteLine();
+                Console.WriteLine("*** DESCRIPTION ***");
+                Console.WriteLine("<-------------------------------------------------->");
+                Console.WriteLine(" " + _player.CurrentLocation.Description.ToString());
+                Console.WriteLine("<-------------------------------------------------->");
+                Console.WriteLine();
                 Console.WriteLine("===================================");
-                Console.WriteLine("| Move (N)orth       Move (S)outh |");
-                Console.WriteLine("| Move (E)ast        Move (W)est  |");
-                Console.WriteLine("| (L)ocation info    (M)ap        |");
+                Console.WriteLine("| (M)ove            Show (P)layer |");
+                Console.WriteLine("| (S)how Map        (I)nventory   |");
+                Console.WriteLine("| (Q)ests           (O)ptions     |");
                 Console.WriteLine("===================================");
+                Console.WriteLine();
                 Console.Write(":> ");
                 playerInput = Console.ReadLine().ToLower();
 
-                if (playerInput == "n" || playerInput == "north")
-                {
-                    MoveNorth(newLocation);
-                }
-                else if (playerInput == "s" || playerInput == "south")
-                {
-                    //MoveSouth
-                }
-                else if (playerInput == "e" || playerInput == "east")
-                {
-                    //MoveEast
-                }
-                else if (playerInput == "w" || playerInput == "west")
-                {
-                    //MoveWest
-                }
-                else if (playerInput == "l" || playerInput == "location" || playerInput == "info" || playerInput == "location info")
-                {
-                    Console.WriteLine(newLocation.Description.ToString());
-                }
-                else if (playerInput == "m" || playerInput == "map")
-                {
-                    Console.WriteLine();
 
-                    Console.WriteLine("=======================");
-                    Console.WriteLine("          MAP          ");
-                    ShowAvailableLocations(_player.CurrentLocation);
-                    Console.WriteLine("=======================");
-                } 
+                if (playerInput == "m" || playerInput == "move")
+                { 
+                    MoveMenu(_player, banner);
+                }
+                else if (playerInput == "p" || playerInput == "show" || playerInput == "player" || playerInput == "show player")
+                {
+                    ShowPlayer(banner, character);
+                }
+                else if (playerInput == "s" || playerInput == "map" || playerInput == "show map")
+                {
+                    ShowMap(_player, banner);
+                }
+                else
+                {
+                    InvalidInput(banner);
+                }
             }
         }
 
-        private static void MoveNorth(Location newLocation)
+        private static void ShowMap(Player _player, string banner)
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(banner);
+            Console.WriteLine("==================================");
+            Console.WriteLine("                MAP               ");
+            ShowAvailableLocations(_player.CurrentLocation);
+            Console.WriteLine("==================================");
+            Console.WriteLine("");
+            Console.WriteLine("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private static void ShowPlayer(string banner, Character character)
+        {
+            Console.Clear();
+            Console.WriteLine(banner);
+            character.PrintCharacter();
+            Console.WriteLine();
+            Console.WriteLine("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private static void MoveMenu(Player _player, string banner)
+        {
+            string playerInput;
+            bool moveMenuLoop = true;
+
+
+            Console.Clear();
+
+            while (moveMenuLoop)
+            {
+                Console.WriteLine(banner);
+                Console.WriteLine();
+                Console.WriteLine("*** CURRENT LOCATION ***");
+                Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
+                Console.WriteLine();
+                Console.WriteLine("==================================");
+                Console.WriteLine("               MAP                ");
+                ShowAvailableLocations(_player.CurrentLocation);
+                Console.WriteLine("==================================");
+                Console.WriteLine();
+                Console.WriteLine("===================================");
+                Console.WriteLine("| Move (N)orth       Move (S)outh |");
+                Console.WriteLine("| Move (E)ast        Move (W)est  |");
+                Console.WriteLine("| (B)ack                          |");
+                Console.WriteLine("===================================");
+                Console.WriteLine();
+                Console.Write(":> ");
+                playerInput = Console.ReadLine();
+
+
+                if (playerInput == "n" || playerInput == "north")
+                {
+
+                    if (_player.CurrentLocation.LocationToNorth != null)
+                    {
+                        _player.CurrentLocation = _player.CurrentLocation.LocationToNorth;
+                        MoveToNorth(_player.CurrentLocation.LocationToNorth, _player);
+                        moveMenuLoop = false;
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        WrongPathMessage(banner);
+                    }
+
+                }
+                else if (playerInput == "s" || playerInput == "south")
+                {
+
+                    if (_player.CurrentLocation.LocationToSouth != null)
+                    {
+                        _player.CurrentLocation = _player.CurrentLocation.LocationToSouth;
+                        MoveToSouth(_player.CurrentLocation.LocationToSouth, _player);
+                        moveMenuLoop = false;
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        WrongPathMessage(banner);
+                    }
+                }
+                else if (playerInput == "e" || playerInput == "east")
+                {
+
+                    if (_player.CurrentLocation.LocationToEast != null)
+                    {
+                        _player.CurrentLocation = _player.CurrentLocation.LocationToEast;
+                        MoveToEast(_player.CurrentLocation.LocationToEast, _player);
+                        moveMenuLoop = false;
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        WrongPathMessage(banner);
+                    }
+                }
+                else if (playerInput == "w" || playerInput == "west")
+                {
+                    if (_player.CurrentLocation.LocationToWest != null)
+                    {
+                        _player.CurrentLocation = _player.CurrentLocation.LocationToWest;
+                        MoveToWest(_player.CurrentLocation.LocationToWest, _player);
+                        Console.Clear();
+                        moveMenuLoop = false;
+                    }
+                    else
+                    {
+                        WrongPathMessage(banner);
+                    }
+                }
+                else if (playerInput == "b" || playerInput == "back")
+                {
+                    Console.Clear();
+                    return;
+                }
+                else
+                {
+                    InvalidInput(banner);
+                }
+            }
+        }
+
+        private static void InvalidInput(string banner)
+        {
+            Console.Clear();
+            Console.WriteLine(banner);
+            Console.WriteLine("Invalid Input! Try again!");
+            Console.WriteLine("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private static void WrongPathMessage(string banner)
+        {
+            Console.Clear();
+            Console.WriteLine(banner);
+            Console.WriteLine("You Can't go there");
+            Console.WriteLine("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private static void MoveToWest(Location newLocation, Player _player)
+        {
+
+            _player.CurrentLocation.LocationToWest = newLocation;
+
+        }
+
+        private static void MoveToEast(Location newLocation, Player _player)
+        {
+
+            _player.CurrentLocation.LocationToEast = newLocation;
+
+        }
+
+        private static void MoveToSouth(Location newLocation, Player _player)
+        {
+
+            _player.CurrentLocation.LocationToSouth = newLocation;
+
+        }
+
+        private static void MoveToNorth(Location newLocation, Player _player)
+        {
+
+            _player.CurrentLocation.LocationToNorth = newLocation;
+
         }
 
         private static void ShowAvailableLocations(Location currentLocation)
@@ -170,8 +334,8 @@ namespace MiniDungeon
             else
             {
                 Console.WriteLine("North Location: Nothing here");
-            } 
-            
+            }
+
             if (currentLocation.LocationToSouth != null)
             {
                 Console.WriteLine("South Location: " + currentLocation.LocationToSouth.Name.ToString());
@@ -179,7 +343,7 @@ namespace MiniDungeon
             else
             {
                 Console.WriteLine("South Location: Nothing here");
-            } 
+            }
 
             if (currentLocation.LocationToEast != null)
             {
@@ -199,17 +363,6 @@ namespace MiniDungeon
                 Console.WriteLine("West Location: Nothing here");
             }
         }
-
-        //public static void MoveTo(Location location)
-        //{
-        //    Player _player;
-
-        //    _player.CurrentLocation = location;
-
-        //    Console.WriteLine(location.ToString());
-
-
-        //}
 
         private static void Intro()
         {

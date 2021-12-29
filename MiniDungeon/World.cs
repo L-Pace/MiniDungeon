@@ -43,7 +43,7 @@ namespace MiniDungeon
         public const int ITEM_ID_VIKTOR_BROKEN_TOE = 21;
         public const int ITEM_ID_MINI_DUNGEON_KEY = 22;
         public const int ITEM_ID_THE_CABIN_IN_THE_WOODS_KEY = 23;
-        public const int ITEM_ID_THE_NEW_WOLD_CROWN = 24;
+        public const int ITEM_ID_THE_NEW_WORLD_CROWN = 24;
         public const int ITEM_ID_THRONE_ROOM_KEY = 25;
 
 
@@ -99,7 +99,7 @@ namespace MiniDungeon
 
             Items.Add(new Item(ITEM_ID_GOBLIN_EAR, "Globlin Ear", "Globlin Ears", 1));
             Items.Add(new Item(ITEM_ID_TROLL_EYE, "Troll Eye", "Troll Eyes", 2));
-            Items.Add(new Item(ITEM_ID_THE_NEW_WOLD_CROWN, "New World Crown", null, 0));
+            Items.Add(new Item(ITEM_ID_THE_NEW_WORLD_CROWN, "New World Crown", null, 0));
 
             Items.Add(new HealingPotion(ITEM_ID_HEALING_POTION, "Healing Potion", "Healing Potions", 2.0f, 5));
 
@@ -178,7 +178,7 @@ namespace MiniDungeon
                 "The situation inside of Mini Dungeon is getting worse day by day. Viktor One Foot is sitting on the throne inside of the last room inside of the dungeon and his command is to take over of our amazing city, Compass house. Unfortunately the dungeon's infested by goblins, trolls and the 2 Viktor's guard: `Oliver The Chosen One` and `Luke The Gentle Giant. He needs to be stopped ASAP to finally create our `New World`. Bring me Viktor's `toe`. Let's say that I'll give you 500 gold for the `toe` and..... you'll see! Good Luck!!", 50, 500);
 
             killViktor.QuestCompletitionItems.Add(new QuestCompletitionItem(ItemByID(ITEM_ID_VIKTOR_BROKEN_TOE), 1));
-            killViktor.RewardItem = ItemByID(ITEM_ID_THE_NEW_WOLD_CROWN);
+            killViktor.RewardItem = ItemByID(ITEM_ID_THE_NEW_WORLD_CROWN);
 
             Quests.Add(clearTheForest);
             Quests.Add(antidote);
@@ -187,60 +187,80 @@ namespace MiniDungeon
 
         private static void PopulateLocations()
         {
-            Location home = new Location(LOCATION_ID_HOME, "Home", "This is your home. Not the best place ever where you can sleep well but at least you a roof above your head.");
+            Location home = new Location(LOCATION_ID_HOME, "Home", "This is your home. Not the best place ever where\n you can sleep well but, at least, you got a roof\n above your head.");
 
-            Location compassHouse = new Location(LOCATION_ID_COMPASS_HOUSE, "Compass House Town", "Our majestic town made by nerds without social life. People like to spend most of their time programming and eating crisps Tyrell (cheese and onions). You can still smell the ash produced by our evil lord during the last session of Applied Science for Games!");
+            Location compassHouse = new Location(LOCATION_ID_COMPASS_HOUSE, "Compass House Town", "Our majestic town made by nerds without social\n life. People like to spend most of their time\n programming and eating crisps Tyrell (cheese and\n onions).\n You can still smell the ash produced by our evil\n lord during the last session of Applied Science\n for Games!");
 
-            Location theWhiteHorseTavern = new Location(LOCATION_ID_THE_WHITE_HORSE_TAVERN, "The White Horse Tavern", "There is a guy waiting at the counter, cleanig really shiny and already clean glasses. Quite empty for all day. Probably people in town are not interested to drink a pint of finest `dirty water`. Ah yeah, nerds life!");
+            Location theWhiteHorseTavern = new Location(LOCATION_ID_THE_WHITE_HORSE_TAVERN, "The White Horse Tavern", "There is a guy waiting at the counter, cleanig\n really shiny and already clean glasses.\n Quite empty for all day.\n Probably people in town are not interested to\n drink a pint of finest `dirty water`. Ah yeah,\n nerds life!");
             theWhiteHorseTavern.QuestAvailableHere = QuestbyID(QUEST_ID_CLEAR_THE_FOREST);
 
-            Location redForest = new Location(LOCATION_ID_THE_RED_FOREST, "The Red Forest", "In the moment that you stepped in this forest, from far away, you can hear goblins screaming and swearing");
+            Location redForest = new Location(LOCATION_ID_THE_RED_FOREST, "The Red Forest", "In the moment that you stepped in this forest,\n from far away, you can hear goblins screaming\n and swearing.");
             redForest.MonsterLivingHere = MonsterByID(MONSTER_ID_GOBLIN);
 
-            Location ianHouse = new Location(LOCATION_ID_IAN_HOUSE, "Ian, The Alchemist, house", "This amazing house is made by thousend of boardgames in limited edition. You can see even a Settles of Catan made by gold with a signature: from Viktor");
+            Location ianHouse = new Location(LOCATION_ID_IAN_HOUSE, "Ian, The Alchemist, house", "This amazing house is made by thousend of\n boardgames in limited edition. You can see even\n a Settles of Catan made by gold with a signature:\n from Viktor");
             ianHouse.QuestAvailableHere = QuestbyID(QUEST_ID_ANTIDODE);
 
-            Location redLake = new Location(LOCATION_ID_THE_RED_LAKE, "The Red Lake", "An amazing lake full of life! Dangerous place without any armor!!");
+            Location redLake = new Location(LOCATION_ID_THE_RED_LAKE, "The Red Lake", "An amazing lake full of life! Dangerous place\n without any armor!!");
             redLake.MonsterLivingHere = MonsterByID(MONSTER_ID_TROLL);
 
-            Location nerdShrine = new Location(LOCATION_ID_THE_NERD_SHRINE, "The Nerd Shrine", "The amazing (only) pricey shop in town. You can smell the sweat after a 3 days session of Mini Dungeons and Wyverns");
+            Location nerdShrine = new Location(LOCATION_ID_THE_NERD_SHRINE, "The Nerd Shrine", "The amazing (only) pricey shop in town.\n You can smell the sweat after a 3 days session of\n Mini Dungeons and Wyverns");
 
-            Location theCabinInTheWoods = new Location(LOCATION_ID_THE_CABIN_IN_THE_WOODS, "The Cabin in the Woods", "Mysterious cabin in the middle of nowhere. Sorrounded by dead trees and a strange timeless fog.", ItemByID(ITEM_ID_THE_CABIN_IN_THE_WOODS_KEY));
+            Location theCabinInTheWoods = new Location(LOCATION_ID_THE_CABIN_IN_THE_WOODS, "The Cabin in the Woods", "Mysterious cabin in the middle of nowhere.\n Sorrounded by dead trees and a strange timeless\n fog.", ItemByID(ITEM_ID_THE_CABIN_IN_THE_WOODS_KEY));
             theCabinInTheWoods.QuestAvailableHere = QuestbyID(QUEST_ID_KILL_VIKTOR);
 
-            Location miniDungeonEntrance = new Location(LOCATION_ID_MINI_DUNGEON_ENTRANCE, "Mini Dungeon Entrance", "The entrance of the Mini Dungeon with a gold plated door");
+            Location miniDungeonEntrance = new Location(LOCATION_ID_MINI_DUNGEON_ENTRANCE, "Mini Dungeon Entrance", "The entrance of the Mini Dungeon with a gold\n plated door");
             miniDungeonEntrance.MonsterLivingHere = MonsterByID(MONSTER_ID_LUKE);
 
-            Location miniDungeonFirstRoom = new Location(LOCATION_ID_MINI_DUNGEON_FIRST_ROOM, "First Mini Dungeon Room", "Quite dark room without windows. You can see something moving in the darkness and .... a fart(?). From the smell is a goblin for sure with some sirious belly problems. Are Ian dog and this goblin related?", ItemByID(ITEM_ID_MINI_DUNGEON_KEY));
+            Location miniDungeonFirstRoom = new Location(LOCATION_ID_MINI_DUNGEON_FIRST_ROOM, "First Mini Dungeon Room", "Quite dark room without windows.\n You can see something moving in the darkness and\n you can hear .... a fart(?). From the smell is a\n goblin for sure with some sirious belly problems.\n Are Ian dog and this goblin related?", ItemByID(ITEM_ID_MINI_DUNGEON_KEY));
             miniDungeonFirstRoom.MonsterLivingHere = MonsterByID(MONSTER_ID_GOBLIN);
 
-            Location miniDungeonSecondRoom = new Location(LOCATION_ID_MINI_DUNGEON_SECOND_ROOM, "Second Mini Dungeon Room", "Dark as the previous one. Strange sounds in the darkness again!");
+            Location miniDungeonSecondRoom = new Location(LOCATION_ID_MINI_DUNGEON_SECOND_ROOM, "Second Mini Dungeon Room", "Dark as the previous one. Strange sounds in the\n darkness again!");
             miniDungeonSecondRoom.MonsterLivingHere = MonsterByID(MONSTER_ID_TROLL);
 
-            Location miniDungeonThirdRoom = new Location(LOCATION_ID_MINI_DUNGEON_THIRD_ROOM, "Third Mini Dungeon Room", "This room smells different. You can hear somebody screming WAKA WAKA WAKA WAKA!");
+            Location miniDungeonThirdRoom = new Location(LOCATION_ID_MINI_DUNGEON_THIRD_ROOM, "Third Mini Dungeon Room", "This room smells different. You can hear somebody\n screming WAKA WAKA WAKA WAKA!");
             miniDungeonThirdRoom.MonsterLivingHere = MonsterByID(MONSTER_ID_OLIVER);
 
-            Location miniDungeonThroneRoom = new Location(LOCATION_ID_MINI_DUNGEON_THRONE_ROOM, "The Throne Room", "The majestic Throne Room where Viktor One Foot manage his guild", ItemByID(ITEM_ID_THRONE_ROOM_KEY));
+            Location miniDungeonThroneRoom = new Location(LOCATION_ID_MINI_DUNGEON_THRONE_ROOM, "The Throne Room", "The majestic Throne Room where Viktor One Foot\n manage his guild", ItemByID(ITEM_ID_THRONE_ROOM_KEY));
             miniDungeonThroneRoom.MonsterLivingHere = MonsterByID(MONSTER_ID_VIKTOR);
 
-
             home.LocationToEast = compassHouse;
-
-            compassHouse.LocationToEast = ianHouse;
-            compassHouse.LocationToNorth = nerdShrine;
-            compassHouse.LocationToSouth = theWhiteHorseTavern;
-            compassHouse.LocationToWest = home;
-
             home.LocationToWest = redForest;
 
+            compassHouse.LocationToNorth = nerdShrine;
+            compassHouse.LocationToSouth = theWhiteHorseTavern;
+            compassHouse.LocationToEast = ianHouse;
+            compassHouse.LocationToWest = home;
+
+            theWhiteHorseTavern.LocationToNorth = compassHouse;
+
+            ianHouse.LocationToWest = compassHouse;
+
+            nerdShrine.LocationToSouth = compassHouse;
+
+            redForest.LocationToNorth = miniDungeonEntrance;
             redForest.LocationToSouth = theCabinInTheWoods;
             redForest.LocationToWest = redLake;
-            redForest.LocationToNorth = miniDungeonEntrance;
+            redForest.LocationToEast = home;
+
+
+            theCabinInTheWoods.LocationToNorth = redForest;
+
+            redLake.LocationToEast = redForest;
 
             miniDungeonEntrance.LocationToNorth = miniDungeonFirstRoom;
+            miniDungeonEntrance.LocationToSouth = redForest;
+
+
             miniDungeonFirstRoom.LocationToEast = miniDungeonSecondRoom;
+            miniDungeonFirstRoom.LocationToSouth = miniDungeonEntrance;
+
             miniDungeonSecondRoom.LocationToNorth = miniDungeonThirdRoom;
+            miniDungeonSecondRoom.LocationToWest = miniDungeonFirstRoom;
+
             miniDungeonThirdRoom.LocationToEast = miniDungeonThroneRoom;
+            miniDungeonThirdRoom.LocationToSouth = miniDungeonSecondRoom;
+
+            miniDungeonThroneRoom.LocationToWest = miniDungeonThirdRoom;
 
             Locations.Add(home);
             Locations.Add(compassHouse);
@@ -248,7 +268,6 @@ namespace MiniDungeon
             Locations.Add(nerdShrine);
             Locations.Add(theWhiteHorseTavern);
             Locations.Add(redForest);
-            Locations.Add(redLake);
             Locations.Add(redLake);
             Locations.Add(miniDungeonEntrance);
             Locations.Add(miniDungeonFirstRoom);
