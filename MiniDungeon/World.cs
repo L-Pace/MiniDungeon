@@ -300,7 +300,7 @@ namespace MiniDungeon
             return null; ;
         }
 
-        private static Item ItemByID(int id)
+        public static Item ItemByID(int id)
         {
             foreach (Item item in Items)
             {

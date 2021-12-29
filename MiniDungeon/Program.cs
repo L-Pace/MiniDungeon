@@ -4,9 +4,6 @@ namespace MiniDungeon
 {
     class Program
     {
-        private Monster _monster;
-        //private Player _player;
-
         static void Main(string[] args)
         {
 
@@ -98,6 +95,7 @@ namespace MiniDungeon
             //Intro();
 
             _player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
+            _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
 
             MainMenu(_player, banner, character);
 
@@ -112,7 +110,7 @@ namespace MiniDungeon
 
                 Console.WriteLine(banner);
                 Console.WriteLine();
-                Console.WriteLine("*** CURRENT LOCATION ***"); 
+                Console.WriteLine("*** CURRENT LOCATION ***");
                 Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
                 Console.WriteLine();
                 Console.WriteLine("*** DESCRIPTION ***");
@@ -131,7 +129,7 @@ namespace MiniDungeon
 
 
                 if (playerInput == "m" || playerInput == "move")
-                { 
+                {
                     MoveMenu(_player, banner);
                 }
                 else if (playerInput == "p" || playerInput == "show" || playerInput == "player" || playerInput == "show player")
@@ -299,10 +297,9 @@ namespace MiniDungeon
 
         private static void MoveToWest(Location newLocation, Player _player)
         {
-
             _player.CurrentLocation.LocationToWest = newLocation;
-
         }
+
 
         private static void MoveToEast(Location newLocation, Player _player)
         {
@@ -315,7 +312,6 @@ namespace MiniDungeon
         {
 
             _player.CurrentLocation.LocationToSouth = newLocation;
-
         }
 
         private static void MoveToNorth(Location newLocation, Player _player)
@@ -324,6 +320,7 @@ namespace MiniDungeon
             _player.CurrentLocation.LocationToNorth = newLocation;
 
         }
+
 
         private static void ShowAvailableLocations(Location currentLocation)
         {
@@ -408,8 +405,5 @@ namespace MiniDungeon
             Console.Clear();
 
         }
-
-
-
     }
 }
