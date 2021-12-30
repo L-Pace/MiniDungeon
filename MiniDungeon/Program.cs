@@ -4,23 +4,29 @@ namespace MiniDungeon
 {
     class Program
     {
-        static void Main(string[] args)
-        {
 
-            bool mainLoop = true;
-            int playerChoice = 0;
-            string title1 = @"
+        private static Player _player = new Player(0, 0, 0, 0, 0);
+        private static Character _character;
+
+        private static string title1 = @"
 ▒█░░▒█ █▀▀ █░░ █▀▀ █▀▀█ █▀▄▀█ █▀▀ 　 ▀▀█▀▀ █▀▀█ 
 ▒█▒█▒█ █▀▀ █░░ █░░ █░░█ █░▀░█ █▀▀ 　 ░░█░░ █░░█ 
 ▒█▄▀▄█ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀▀ ▀░░░▀ ▀▀▀ 　 ░░▀░░ ▀▀▀▀";
-
-            string title2 = @"
+        private static string title2 = @"
 ███╗░░░███╗██╗███╗░░██╗██╗  ██████╗░██╗░░░██╗███╗░░██╗░██████╗░███████╗░█████╗░███╗░░██╗
 ████╗░████║██║████╗░██║██║  ██╔══██╗██║░░░██║████╗░██║██╔════╝░██╔════╝██╔══██╗████╗░██║
 ██╔████╔██║██║██╔██╗██║██║  ██║░░██║██║░░░██║██╔██╗██║██║░░██╗░█████╗░░██║░░██║██╔██╗██║
 ██║╚██╔╝██║██║██║╚████║██║  ██║░░██║██║░░░██║██║╚████║██║░░╚██╗██╔══╝░░██║░░██║██║╚████║
 ██║░╚═╝░██║██║██║░╚███║██║  ██████╔╝╚██████╔╝██║░╚███║╚██████╔╝███████╗╚█████╔╝██║░╚███║
 ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═╝  ╚═════╝░░╚═════╝░╚═╝░░╚══╝░╚═════╝░╚══════╝░╚════╝░╚═╝░░╚══╝";
+
+        static void Main(string[] args)
+        {
+
+            bool moveMenuLoop = true;
+            bool mainLoop = true;
+            int playerChoice = 0;
+
 
 
 
@@ -52,9 +58,7 @@ namespace MiniDungeon
                 {
                     case 1:
 
-                        Player _player = new Player(0, 0, 0, 0, 0);
-
-                        NewGame(title2, _player);
+                        NewGame();
 
                         break;
 
@@ -84,31 +88,31 @@ namespace MiniDungeon
             }
         }
 
-        private static void NewGame(string banner, Player _player)
+        private static void NewGame()
         {
-            Character character = new Character();
+            _character = new Character();
 
             Console.Clear();
 
-            Console.WriteLine(banner);
+            Console.WriteLine(title2);
 
             //Intro();
 
             _player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
 
-            MainMenu(_player, banner, character);
+            MainMenu();
 
         }
 
-        private static void MainMenu(Player _player, string banner, Character character)
+        private static void MainMenu()
         {
             string playerInput;
 
             while (true)
             {
-
-                Console.WriteLine(banner);
+                Console.Clear();
+                Console.WriteLine(title2);
                 Console.WriteLine();
                 Console.WriteLine("*** CURRENT LOCATION ***");
                 Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
@@ -130,50 +134,23 @@ namespace MiniDungeon
 
                 if (playerInput == "m" || playerInput == "move")
                 {
-                    MoveMenu(_player, banner);
+                    MoveMenu();
                 }
                 else if (playerInput == "p" || playerInput == "show" || playerInput == "player" || playerInput == "show player")
                 {
-                    ShowPlayer(banner, character);
+                    ShowPlayer();
                 }
                 else if (playerInput == "s" || playerInput == "map" || playerInput == "show map")
                 {
-                    ShowMap(_player, banner);
+                    ShowMap();
                 }
                 else
                 {
-                    InvalidInput(banner);
+                    InvalidInput();
                 }
             }
         }
-
-        private static void ShowMap(Player _player, string banner)
-        {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(banner);
-            Console.WriteLine("==================================");
-            Console.WriteLine("                MAP               ");
-            ShowAvailableLocations(_player.CurrentLocation);
-            Console.WriteLine("==================================");
-            Console.WriteLine("");
-            Console.WriteLine("[ENTER] to go back");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-        private static void ShowPlayer(string banner, Character character)
-        {
-            Console.Clear();
-            Console.WriteLine(banner);
-            character.PrintCharacter();
-            Console.WriteLine();
-            Console.WriteLine("[ENTER] to go back");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-        private static void MoveMenu(Player _player, string banner)
+        private static void MoveMenu()
         {
             string playerInput;
             bool moveMenuLoop = true;
@@ -183,7 +160,7 @@ namespace MiniDungeon
 
             while (moveMenuLoop)
             {
-                Console.WriteLine(banner);
+                Console.WriteLine(title2);
                 Console.WriteLine();
                 Console.WriteLine("*** CURRENT LOCATION ***");
                 Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
@@ -202,123 +179,133 @@ namespace MiniDungeon
                 Console.Write(":> ");
                 playerInput = Console.ReadLine();
 
-
-                if (playerInput == "n" || playerInput == "north")
-                {
-
-                    if (_player.CurrentLocation.LocationToNorth != null)
-                    {
-                        _player.CurrentLocation = _player.CurrentLocation.LocationToNorth;
-                        MoveToNorth(_player.CurrentLocation.LocationToNorth, _player);
-                        moveMenuLoop = false;
-                        Console.Clear();
-                    }
-                    else
-                    {
-                        WrongPathMessage(banner);
-                    }
-
-                }
-                else if (playerInput == "s" || playerInput == "south")
-                {
-
-                    if (_player.CurrentLocation.LocationToSouth != null)
-                    {
-                        _player.CurrentLocation = _player.CurrentLocation.LocationToSouth;
-                        MoveToSouth(_player.CurrentLocation.LocationToSouth, _player);
-                        moveMenuLoop = false;
-                        Console.Clear();
-                    }
-                    else
-                    {
-                        WrongPathMessage(banner);
-                    }
-                }
-                else if (playerInput == "e" || playerInput == "east")
-                {
-
-                    if (_player.CurrentLocation.LocationToEast != null)
-                    {
-                        _player.CurrentLocation = _player.CurrentLocation.LocationToEast;
-                        MoveToEast(_player.CurrentLocation.LocationToEast, _player);
-                        moveMenuLoop = false;
-                        Console.Clear();
-                    }
-                    else
-                    {
-                        WrongPathMessage(banner);
-                    }
-                }
-                else if (playerInput == "w" || playerInput == "west")
-                {
-                    if (_player.CurrentLocation.LocationToWest != null)
-                    {
-                        _player.CurrentLocation = _player.CurrentLocation.LocationToWest;
-                        MoveToWest(_player.CurrentLocation.LocationToWest, _player);
-                        Console.Clear();
-                        moveMenuLoop = false;
-                    }
-                    else
-                    {
-                        WrongPathMessage(banner);
-                    }
-                }
-                else if (playerInput == "b" || playerInput == "back")
-                {
-                    Console.Clear();
-                    return;
-                }
-                else
-                {
-                    InvalidInput(banner);
-                }
+                MoveTo(playerInput, moveMenuLoop);
+                moveMenuLoop = false;
             }
         }
 
-        private static void InvalidInput(string banner)
+        private static bool MoveTo(string playerInput, bool moveMenuLoop)
+        {
+            Location locationNorth = _player.CurrentLocation.LocationToNorth;
+            Location locationSouth = _player.CurrentLocation.LocationToSouth;
+            Location locationEast = _player.CurrentLocation.LocationToEast;
+            Location locationWest = _player.CurrentLocation.LocationToWest;
+
+
+
+            if (playerInput == "n" || playerInput == "north")
+            {
+                moveMenuLoop = ItemRequiredChecker(locationNorth, moveMenuLoop);
+            }
+            else if (playerInput == "s" || playerInput == "south")
+            {
+                moveMenuLoop = ItemRequiredChecker(locationSouth, moveMenuLoop);
+
+            }
+            else if (playerInput == "e" || playerInput == "east")
+            {
+                moveMenuLoop = ItemRequiredChecker(locationEast, moveMenuLoop);
+
+            }
+            else if (playerInput == "w" || playerInput == "west")
+            {
+                moveMenuLoop = ItemRequiredChecker(locationWest, moveMenuLoop);
+            }
+            else if (playerInput == "b" || playerInput == "back")
+            {
+                Console.Clear();
+            }
+            else
+            {
+                InvalidInput();
+            }
+            return moveMenuLoop;
+        }
+        private static void ShowPlayer()
         {
             Console.Clear();
-            Console.WriteLine(banner);
+            Console.WriteLine(title2);
+            _character.PrintCharacter();
+            Console.WriteLine();
+            Console.WriteLine("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        private static void ShowMap()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(title2);
+            Console.WriteLine("==================================");
+            Console.WriteLine("                MAP               ");
+            ShowAvailableLocations(_player.CurrentLocation);
+            Console.WriteLine("==================================");
+            Console.WriteLine("");
+            Console.WriteLine("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+
+        private static void InvalidInput()
+        {
+            Console.Clear();
+            Console.WriteLine(title2);
             Console.WriteLine("Invalid Input! Try again!");
             Console.WriteLine("[ENTER] to go back");
             Console.ReadKey();
             Console.Clear();
         }
 
-        private static void WrongPathMessage(string banner)
+
+        private static bool ItemRequiredChecker(Location newLocation, bool moveMenuLoop)
+        {
+            if (newLocation != null)
+            {
+                if (newLocation.ItemRequiredToEnter != null)
+                {
+                    bool playerHasItemToEnter = false;
+                    foreach (InventoryItem ii in _player.Inventory)
+                    {
+                        if (ii.Details.ID == newLocation.ItemRequiredToEnter.ID)
+                        {
+                            playerHasItemToEnter = true;
+
+                            break;
+                        }
+                    }
+                    if (!playerHasItemToEnter)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(title2);
+                        Console.WriteLine();
+                        Console.WriteLine("You must have " + newLocation.ItemRequiredToEnter.Name + " to enter here!");
+                        Console.WriteLine("[ENTER] to go back");
+                        Console.ReadKey();
+                        Console.Clear();
+                        return false;
+
+                    }
+                    Console.Clear();
+                }
+                _player.CurrentLocation = newLocation;
+            }
+            else
+            {
+                WrongPathMessage();
+            }
+
+            return moveMenuLoop;
+        }
+
+        private static void WrongPathMessage()
         {
             Console.Clear();
-            Console.WriteLine(banner);
+            Console.WriteLine(title2);
             Console.WriteLine("You Can't go there");
             Console.WriteLine("[ENTER] to go back");
             Console.ReadKey();
             Console.Clear();
-        }
-
-        private static void MoveToWest(Location newLocation, Player _player)
-        {
-            _player.CurrentLocation.LocationToWest = newLocation;
-        }
-
-
-        private static void MoveToEast(Location newLocation, Player _player)
-        {
-
-            _player.CurrentLocation.LocationToEast = newLocation;
-
-        }
-
-        private static void MoveToSouth(Location newLocation, Player _player)
-        {
-
-            _player.CurrentLocation.LocationToSouth = newLocation;
-        }
-
-        private static void MoveToNorth(Location newLocation, Player _player)
-        {
-
-            _player.CurrentLocation.LocationToNorth = newLocation;
-
         }
 
 
