@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace MiniDungeon
 {
     class Program
@@ -7,6 +8,8 @@ namespace MiniDungeon
 
         private static Player _player = new Player(0, 0, 0, 0, 0);
         private static Character _character;
+
+        
 
         private static string title1 = @"
 ▒█░░▒█ █▀▀ █░░ █▀▀ █▀▀█ █▀▄▀█ █▀▀ 　 ▀▀█▀▀ █▀▀█ 
@@ -23,15 +26,9 @@ namespace MiniDungeon
         static void Main(string[] args)
         {
 
-            bool moveMenuLoop = true;
+
             bool mainLoop = true;
             int playerChoice = 0;
-
-
-
-
-
-
 
             Console.WriteLine(title1);
             Console.WriteLine(title2);
@@ -92,11 +89,13 @@ namespace MiniDungeon
         {
             _character = new Character();
 
+           
+
             Console.Clear();
 
             Console.WriteLine(title2);
 
-            //Intro();
+            Intro();
 
             _player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
@@ -108,6 +107,7 @@ namespace MiniDungeon
         private static void MainMenu()
         {
             string playerInput;
+
 
             while (true)
             {
@@ -122,11 +122,12 @@ namespace MiniDungeon
                 Console.WriteLine(" " + _player.CurrentLocation.Description.ToString());
                 Console.WriteLine("<-------------------------------------------------->");
                 Console.WriteLine();
-                Console.WriteLine("===================================");
-                Console.WriteLine("| (M)ove            Show (P)layer |");
-                Console.WriteLine("| (S)how Map        (I)nventory   |");
-                Console.WriteLine("| (Q)ests           (O)ptions     |");
-                Console.WriteLine("===================================");
+                Console.WriteLine("==============================");
+                Console.WriteLine("| (M)ove     | Show (P)layer |");
+                Console.WriteLine("| (E)xplore  | (I)nventory   |");
+                Console.WriteLine("| (S)how Map | (Q)ests       |");
+                Console.WriteLine("==============================");
+                Console.WriteLine("                 | (O)ptions |");
                 Console.WriteLine();
                 Console.Write(":> ");
                 playerInput = Console.ReadLine().ToLower();
@@ -136,7 +137,20 @@ namespace MiniDungeon
                 {
                     MoveMenu();
                 }
-                else if (playerInput == "p" || playerInput == "show" || playerInput == "player" || playerInput == "show player")
+                else if (playerInput == "e" || playerInput == "explore")
+                {
+
+                }
+                else if (playerInput == "i" || playerInput == "inventory")
+                {
+                    //InventoryMenu();
+                }
+                else if (playerInput == "q" || playerInput == "quests" || playerInput == "quest")
+                {
+                    //ShowQuests();
+                }
+
+                else if (playerInput == "p" || playerInput == "player" || playerInput == "show player")
                 {
                     ShowPlayer();
                 }
@@ -144,12 +158,17 @@ namespace MiniDungeon
                 {
                     ShowMap();
                 }
+                else if (playerInput == "o" || playerInput == "options")
+                {
+                    //OptionsMenu();
+                }
                 else
                 {
                     InvalidInput();
                 }
             }
         }
+
         private static void MoveMenu()
         {
             string playerInput;

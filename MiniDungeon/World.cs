@@ -159,7 +159,7 @@ namespace MiniDungeon
             Quest clearTheForest = new Quest(
                 QUEST_ID_CLEAR_THE_FOREST,
                 "Kill the goblins in the forest",
-                "Kill the goblins that infesting the Red Forest and bring back 3 `goblin ears`. I'll give you an healing potion and, of course, 15 golds!", 20, 10);
+                "Kill the goblins that infesting the Red Forest and bring back 3 `goblin ears`. I'll give you an healing potion and, of course, 15 golds!", 20, 15);
 
             clearTheForest.QuestCompletitionItems.Add(new QuestCompletitionItem(ItemByID(ITEM_ID_GOBLIN_EAR), 3));
             clearTheForest.RewardItem = ItemByID(ITEM_ID_HEALING_POTION);
@@ -175,7 +175,7 @@ namespace MiniDungeon
             Quest killViktor = new Quest(
                 QUEST_ID_KILL_VIKTOR,
                 "Kill Viktor One Foot",
-                "The situation inside of Mini Dungeon is getting worse day by day. Viktor One Foot is sitting on the throne inside of the last room inside of the dungeon and his command is to take over of our amazing city, Compass house. Unfortunately the dungeon's infested by goblins, trolls and the 2 Viktor's guard: `Oliver The Chosen One` and `Luke The Gentle Giant. He needs to be stopped ASAP to finally create our `New World`. Bring me Viktor's `toe`. Let's say that I'll give you 500 gold for the `toe` and..... you'll see! Good Luck!!", 50, 500);
+                "The situation inside of Mini Dungeon is getting worse day by day. Viktor One Foot is sitting on the throne inside of the last room of the dungeon and his command is to take over of our amazing city, Compass House. Unfortunately the dungeon's infested by goblins, trolls and the 2 Viktor's guard: `Oliver The Chosen One` and `Luke The Gentle Giant`. He needs to be stopped ASAP to finally create our `New World`. Bring me Viktor's `toe`. Let's say that I'll give you 500 gold for the `toe` and..... you'll see! Good Luck!!", 50, 500);
 
             killViktor.QuestCompletitionItems.Add(new QuestCompletitionItem(ItemByID(ITEM_ID_VIKTOR_BROKEN_TOE), 1));
             killViktor.RewardItem = ItemByID(ITEM_ID_THE_NEW_WORLD_CROWN);
