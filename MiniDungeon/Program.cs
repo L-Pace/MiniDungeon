@@ -1,27 +1,44 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace MiniDungeon
 {
-    class Program
+    partial class Program
     {
 
         private static Player _player = new Player(0, 0, 0, 0, 0);
         private static Character _character;
+        private static Monster _currentMonster;
+        private static List<Weapon> _weapons;
+        private static List<Armor> _armors;
+        private static List<HealingPotion> _healingPotions;
 
-        
-
-        private static string title1 = @"
+        private static string welcomeText = @"
 ▒█░░▒█ █▀▀ █░░ █▀▀ █▀▀█ █▀▄▀█ █▀▀ 　 ▀▀█▀▀ █▀▀█ 
 ▒█▒█▒█ █▀▀ █░░ █░░ █░░█ █░▀░█ █▀▀ 　 ░░█░░ █░░█ 
 ▒█▄▀▄█ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀▀ ▀░░░▀ ▀▀▀ 　 ░░▀░░ ▀▀▀▀";
-        private static string title2 = @"
+        private static string miniDungeonText = @"
 ███╗░░░███╗██╗███╗░░██╗██╗  ██████╗░██╗░░░██╗███╗░░██╗░██████╗░███████╗░█████╗░███╗░░██╗
 ████╗░████║██║████╗░██║██║  ██╔══██╗██║░░░██║████╗░██║██╔════╝░██╔════╝██╔══██╗████╗░██║
 ██╔████╔██║██║██╔██╗██║██║  ██║░░██║██║░░░██║██╔██╗██║██║░░██╗░█████╗░░██║░░██║██╔██╗██║
 ██║╚██╔╝██║██║██║╚████║██║  ██║░░██║██║░░░██║██║╚████║██║░░╚██╗██╔══╝░░██║░░██║██║╚████║
 ██║░╚═╝░██║██║██║░╚███║██║  ██████╔╝╚██████╔╝██║░╚███║╚██████╔╝███████╗╚█████╔╝██║░╚███║
 ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═╝  ╚═════╝░░╚═════╝░╚═╝░░╚══╝░╚═════╝░╚══════╝░╚════╝░╚═╝░░╚══╝";
+
+        private static string fightText = @"
+███████████████▀███████████
+█▄─▄▄─█▄─▄█─▄▄▄▄█─█─█─▄─▄─█
+██─▄████─██─██▄─█─▄─███─███
+▀▄▄▄▀▀▀▄▄▄▀▄▄▄▄▄▀▄▀▄▀▀▄▄▄▀▀";
+
+        private static string questBookText = @"
+█▀█ █░█ █▀▀ █▀ ▀█▀   █▄▄ █▀█ █▀█ █▄▀
+▀▀█ █▄█ ██▄ ▄█ ░█░   █▄█ █▄█ █▄█ █░█";
+
+        private static string inventoryText = @"
+█ █▄░█ █░█ █▀▀ ▀█▀ █▀█ █▀█ █▄█
+█ █░▀█ ▀▄▀ ██▄ ░█░ █▄█ █▀▄ ░█░";
+
 
         static void Main(string[] args)
         {
@@ -30,8 +47,8 @@ namespace MiniDungeon
             bool mainLoop = true;
             int playerChoice = 0;
 
-            Console.WriteLine(title1);
-            Console.WriteLine(title2);
+            Console.WriteLine(welcomeText);
+            Console.WriteLine(miniDungeonText);
             Console.WriteLine("");
             Console.WriteLine("==================");
             Console.WriteLine("| 1) New Game    |");
@@ -87,245 +104,113 @@ namespace MiniDungeon
 
         private static void NewGame()
         {
-            _character = new Character();
+            _weapons = new List<Weapon>();
 
-           
+            _armors = new List<Armor>();
+
+            _healingPotions = new List<HealingPotion>();
+
+            _character = new Character();
 
             Console.Clear();
 
-            Console.WriteLine(title2);
+            Console.WriteLine(miniDungeonText);
 
-            Intro();
+            //Intro();
 
             _player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
 
-            MainMenu();
+            AddWeaponsToWeaponList(_weapons);
+            AddArmorsToArmorList(_armors);
+            AddHealingPotionsToHealingPotionList(_healingPotions);
+
+            RemoveWeaponsFromPlayerInventory();
+            RemoveArmorsFromPlayerInventory();
+            RemoveHealingPotionsFromPlayerInventory();
+
+            _ = new MainM();
 
         }
 
-        private static void MainMenu()
+        private static void AddWeaponsToWeaponList(List<Weapon> _weapons)
         {
-            string playerInput;
-
-
-            while (true)
+            foreach (InventoryItem ii in _player.Inventory)
             {
-                Console.Clear();
-                Console.WriteLine(title2);
-                Console.WriteLine();
-                Console.WriteLine("*** CURRENT LOCATION ***");
-                Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
-                Console.WriteLine();
-                Console.WriteLine("*** DESCRIPTION ***");
-                Console.WriteLine("<-------------------------------------------------->");
-                Console.WriteLine(" " + _player.CurrentLocation.Description.ToString());
-                Console.WriteLine("<-------------------------------------------------->");
-                Console.WriteLine();
-                Console.WriteLine("==============================");
-                Console.WriteLine("| (M)ove     | Show (P)layer |");
-                Console.WriteLine("| (E)xplore  | (I)nventory   |");
-                Console.WriteLine("| (S)how Map | (Q)ests       |");
-                Console.WriteLine("==============================");
-                Console.WriteLine("                 | (O)ptions |");
-                Console.WriteLine();
-                Console.Write(":> ");
-                playerInput = Console.ReadLine().ToLower();
+                if (ii.Details.IsWeapon)
+                {
+                    _weapons.Add((Weapon)ii.Details);   
+                }   
+            }
+        }
 
-
-                if (playerInput == "m" || playerInput == "move")
+        private static void AddArmorsToArmorList(List<Armor> _armors)
+        {
+            foreach (InventoryItem ii in _player.Inventory)
+            {
+                if (ii.Details.IsArmor)
                 {
-                    MoveMenu();
-                }
-                else if (playerInput == "e" || playerInput == "explore")
-                {
-
-                }
-                else if (playerInput == "i" || playerInput == "inventory")
-                {
-                    //InventoryMenu();
-                }
-                else if (playerInput == "q" || playerInput == "quests" || playerInput == "quest")
-                {
-                    //ShowQuests();
-                }
-
-                else if (playerInput == "p" || playerInput == "player" || playerInput == "show player")
-                {
-                    ShowPlayer();
-                }
-                else if (playerInput == "s" || playerInput == "map" || playerInput == "show map")
-                {
-                    ShowMap();
-                }
-                else if (playerInput == "o" || playerInput == "options")
-                {
-                    //OptionsMenu();
-                }
-                else
-                {
-                    InvalidInput();
+                    _armors.Add((Armor)ii.Details);
                 }
             }
         }
 
-        private static void MoveMenu()
+        private static void AddHealingPotionsToHealingPotionList(List<HealingPotion> _healingPotions)
         {
-            string playerInput;
-            bool moveMenuLoop = true;
-
-
-            Console.Clear();
-
-            while (moveMenuLoop)
+            foreach (InventoryItem ii in _player.Inventory)
             {
-                Console.WriteLine(title2);
-                Console.WriteLine();
-                Console.WriteLine("*** CURRENT LOCATION ***");
-                Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
-                Console.WriteLine();
-                Console.WriteLine("==================================");
-                Console.WriteLine("               MAP                ");
-                ShowAvailableLocations(_player.CurrentLocation);
-                Console.WriteLine("==================================");
-                Console.WriteLine();
-                Console.WriteLine("===================================");
-                Console.WriteLine("| Move (N)orth       Move (S)outh |");
-                Console.WriteLine("| Move (E)ast        Move (W)est  |");
-                Console.WriteLine("| (B)ack                          |");
-                Console.WriteLine("===================================");
-                Console.WriteLine();
-                Console.Write(":> ");
-                playerInput = Console.ReadLine();
-
-                MoveTo(playerInput, moveMenuLoop);
-                moveMenuLoop = false;
-            }
-        }
-
-        private static bool MoveTo(string playerInput, bool moveMenuLoop)
-        {
-            Location locationNorth = _player.CurrentLocation.LocationToNorth;
-            Location locationSouth = _player.CurrentLocation.LocationToSouth;
-            Location locationEast = _player.CurrentLocation.LocationToEast;
-            Location locationWest = _player.CurrentLocation.LocationToWest;
-
-
-
-            if (playerInput == "n" || playerInput == "north")
-            {
-                moveMenuLoop = ItemRequiredChecker(locationNorth, moveMenuLoop);
-            }
-            else if (playerInput == "s" || playerInput == "south")
-            {
-                moveMenuLoop = ItemRequiredChecker(locationSouth, moveMenuLoop);
-
-            }
-            else if (playerInput == "e" || playerInput == "east")
-            {
-                moveMenuLoop = ItemRequiredChecker(locationEast, moveMenuLoop);
-
-            }
-            else if (playerInput == "w" || playerInput == "west")
-            {
-                moveMenuLoop = ItemRequiredChecker(locationWest, moveMenuLoop);
-            }
-            else if (playerInput == "b" || playerInput == "back")
-            {
-                Console.Clear();
-            }
-            else
-            {
-                InvalidInput();
-            }
-            return moveMenuLoop;
-        }
-        private static void ShowPlayer()
-        {
-            Console.Clear();
-            Console.WriteLine(title2);
-            _character.PrintCharacter();
-            Console.WriteLine();
-            Console.WriteLine("[ENTER] to go back");
-            Console.ReadKey();
-            Console.Clear();
-        }
-        private static void ShowMap()
-        {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(title2);
-            Console.WriteLine("==================================");
-            Console.WriteLine("                MAP               ");
-            ShowAvailableLocations(_player.CurrentLocation);
-            Console.WriteLine("==================================");
-            Console.WriteLine("");
-            Console.WriteLine("[ENTER] to go back");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-
-        private static void InvalidInput()
-        {
-            Console.Clear();
-            Console.WriteLine(title2);
-            Console.WriteLine("Invalid Input! Try again!");
-            Console.WriteLine("[ENTER] to go back");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-
-        private static bool ItemRequiredChecker(Location newLocation, bool moveMenuLoop)
-        {
-            if (newLocation != null)
-            {
-                if (newLocation.ItemRequiredToEnter != null)
+                if (ii.Details.IsHealingPotion)
                 {
-                    bool playerHasItemToEnter = false;
-                    foreach (InventoryItem ii in _player.Inventory)
+                    _healingPotions.Add((HealingPotion)ii.Details);
+                }
+            }
+        }
+
+        private static void RemoveWeaponsFromPlayerInventory()
+        {
+            foreach(Weapon w in _weapons)
+            {
+                for (int i = 0; i < _player.Inventory.Count; i++)
+                {
+                    InventoryItem ii = _player.Inventory[i];
+                    if (w.ID == ii.Details.ID)
                     {
-                        if (ii.Details.ID == newLocation.ItemRequiredToEnter.ID)
-                        {
-                            playerHasItemToEnter = true;
-
-                            break;
-                        }
+                        _player.Inventory.Remove(ii);
                     }
-                    if (!playerHasItemToEnter)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(title2);
-                        Console.WriteLine();
-                        Console.WriteLine("You must have " + newLocation.ItemRequiredToEnter.Name + " to enter here!");
-                        Console.WriteLine("[ENTER] to go back");
-                        Console.ReadKey();
-                        Console.Clear();
-                        return false;
-
-                    }
-                    Console.Clear();
                 }
-                _player.CurrentLocation = newLocation;
             }
-            else
-            {
-                WrongPathMessage();
-            }
-
-            return moveMenuLoop;
         }
 
-        private static void WrongPathMessage()
+        private static void RemoveArmorsFromPlayerInventory()
         {
-            Console.Clear();
-            Console.WriteLine(title2);
-            Console.WriteLine("You Can't go there");
-            Console.WriteLine("[ENTER] to go back");
-            Console.ReadKey();
-            Console.Clear();
+            foreach (Armor a in _armors)
+            {
+                for (int i = 0; i < _player.Inventory.Count; i++)
+                {
+                    InventoryItem ii = _player.Inventory[i];
+                    if (a.ID == ii.Details.ID)
+                    {
+                        _player.Inventory.Remove(ii);
+                    }
+                }
+            }
         }
+
+        private static void RemoveHealingPotionsFromPlayerInventory()
+        {
+            foreach(HealingPotion hp in _healingPotions)
+            {
+                for (int i = 0; i < _player.Inventory.Count; i++)
+                {
+                    InventoryItem ii = _player.Inventory[i];
+                    if (hp.ID == ii.Details.ID)
+                    {
+                        _player.Inventory.Remove(ii);
+                    }
+                }
+            }
+        }
+
 
 
         private static void ShowAvailableLocations(Location currentLocation)
@@ -367,12 +252,60 @@ namespace MiniDungeon
             }
         }
 
+        private static void WrongPathMessage()
+        {
+            Console.Clear();
+            Console.WriteLine(miniDungeonText);
+            Console.WriteLine("You can't go there!");
+            Console.Write("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private static void ShowPlayer()
+        {
+            Console.Clear();
+            Console.WriteLine(miniDungeonText);
+            _character.PrintCharacter();
+            Console.WriteLine();
+            Console.Write("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+
+        private static void ShowMap()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(miniDungeonText);
+            Console.WriteLine("==================================");
+            Console.WriteLine("                MAP               ");
+            ShowAvailableLocations(_player.CurrentLocation);
+            Console.WriteLine("==================================");
+            Console.WriteLine();
+            Console.Write("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private static void InvalidInput()
+        {
+            Console.Clear();
+            Console.WriteLine(miniDungeonText);
+            Console.WriteLine("Invalid Input! Try again!");
+            Console.Write("[ENTER] to go back");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
         private static void Intro()
         {
             Console.WriteLine();
 
             Console.WriteLine("Narrator: A long time ago Compass house was an happy Town where people came just ");
             Console.WriteLine("          to spend their holidays and enjoy their life out of the busy life in Cambridge City.");
+            Console.Write("[ENTER] to continue...");
             Console.ReadKey();
             Console.WriteLine("Narrator: Our Mini Dungeon, made by our Ancient Lords, was attracting also a lot of people.");
             Console.ReadKey();

@@ -8,6 +8,7 @@ namespace MiniDungeon
     {
         public static readonly List<Item> Items = new List<Item>();
         public static readonly List<Monster> Monsters = new List<Monster>();
+        public static readonly List<NPC> NPCs = new List<NPC>();
         public static readonly List<Quest> Quests = new List<Quest>();
         public static readonly List<Location> Locations = new List<Location>();
 
@@ -53,6 +54,10 @@ namespace MiniDungeon
         public const int MONSTER_ID_LUKE = 4;
         public const int MONSTER_ID_VIKTOR = 5;
 
+        public const int NPC_ID_IAN = 1;
+        public const int NPC_ID_INNKEEPER = 2;
+        public const int NPC_ID_THE_HERMIT_IN_THE_WOODS = 3;
+
         public const int QUEST_ID_CLEAR_THE_FOREST = 1;
         public const int QUEST_ID_ANTIDODE = 2;
         public const int QUEST_ID_KILL_VIKTOR = 3;
@@ -78,6 +83,7 @@ namespace MiniDungeon
         {
             PopulateItems();
             PopulateMonsters();
+            PopulateNPC();
             PopulateQuests();
             PopulateLocations();
         }
@@ -97,8 +103,8 @@ namespace MiniDungeon
             Items.Add(new Armor(ITEM_ID_THE_CHESTPLATE_OF_SUNSHINE, "Chestplate of the Sunshine", "Chestplates of the Sunshine", 5.0f, 2, 5));
             Items.Add(new Armor(ITEM_ID_THE_LIGHT_CHESTPLATE_OF_CATARINA, "Light Chestplate of Catarina", "Light Chestplates of Catarina", 5.0f, 2, 5));
 
-            Items.Add(new Item(ITEM_ID_GOBLIN_EAR, "Globlin Ear", "Globlin Ears", 1));
-            Items.Add(new Item(ITEM_ID_TROLL_EYE, "Troll Eye", "Troll Eyes", 2));
+            Items.Add(new Item(ITEM_ID_GOBLIN_EAR, "Globlin Ear", "Globlin Ears", 1.0f));
+            Items.Add(new Item(ITEM_ID_TROLL_EYE, "Troll Eye", "Troll Eyes", 2.0f));
             Items.Add(new Item(ITEM_ID_THE_NEW_WORLD_CROWN, "New World Crown", null, 0));
 
             Items.Add(new HealingPotion(ITEM_ID_HEALING_POTION, "Healing Potion", "Healing Potions", 2.0f, 5));
@@ -153,31 +159,44 @@ namespace MiniDungeon
             Monsters.Add(viktor);
         }
 
+        private static void PopulateNPC()
+        {
+            NPC ian = new NPC(NPC_ID_IAN, "Ian, the Alchemist", " Hello traveler. I'm Ian, the Alchemist.\n I have a job for ya. I'm preparing an antidote for my dog that by\n accident ate snake chocolate.\n I can't leave home right now and I need `3 trolls eye` to complete the\n antidote.\n I saw some trolls just around the Red Lake.\n If you'll help me I'll give you the `key` that open the `Cabin in the\n woods`, just South of the Red Forest and 20 gold.", "I need the ingredients ASAP or my dog will make a mess for at least 3 days in a row!", " Thank you for your help!\n This is your reward and good luck for your adventure!", "I'm quite busy preparing the antidote for my dog! Thank you again for your help! See you around!");
+
+            NPC innkeeper = new NPC(NPC_ID_INNKEEPER, " James, the innkeeper", " Are you looking for a job? Fine...Kill the goblins that infesting the\n Red Forest\n and bring back `3 goblins ears`.\n I'll give you an healing potion and, of course, 15 golds!", "The goblins are still alive? I think it's not a big deal kill\n some annoying goblins, right? Come back with the ears!", "Hope the goblins didn't give you hard time! This is your reward!", "All day cleaning already clean glasses. What's the point to have a business in this town?\n FOR THE GLORY!!\n [A glass crash in his hands] I need a medic...");
+
+            NPC hermit = new NPC(NPC_ID_THE_HERMIT_IN_THE_WOODS, "Dominuque, the hermit in the woods", " Hello Traveler.\n The situation inside of Mini Dungeon is getting worse day by day.\n Viktor One Foot is sitting on the throne inside of the last room of\n the dungeon and his command is to take over of our amazing city:\n Compass House.\n Unfortunately the dungeon's infested by goblins, trolls and 2 Viktor's\n guard: `Oliver The Chosen One` and `Luke The Gentle Giant`.\n He needs to be stopped ASAP to finally create our `New World`.\n Bring me Viktor's `toe`.\n Let's say that I'll give you 500 gold for the `toe` and..... you'll\n see! Good Luck!!", " Where is Viktor's toe? Still on his foot? Go back in the Mini Dungeon and defeat him!!!", "Congratulation my new Lord! Now we'll rebuild our new world! The Mini Dungeon is now in our hands and you'll be my muppet! Now you're in my dominion! Death and diseases will be upon Compass House, Cambridge Town and all the lands surrounding us.........ehm of course I'm joking. We'll refubrish the Mini Dungeon and we'll open again the museum.", "Dominique disappeared and he left this message:\n `I'm away for holidays in New Castle`. I'll be back in few years!");
+
+            NPCs.Add(ian);
+            NPCs.Add(innkeeper);
+            NPCs.Add(hermit);
+            
+        } 
 
         private static void PopulateQuests()
         {
             Quest clearTheForest = new Quest(
                 QUEST_ID_CLEAR_THE_FOREST,
-                "Kill the goblins in the forest",
-                "Kill the goblins that infesting the Red Forest and bring back 3 `goblin ears`. I'll give you an healing potion and, of course, 15 golds!", 20, 15);
+                " Goblin Genocide",
+                " The innkeeper in town needs help to clear the Red forest from the\ngoblins.", 20, 15);
 
-            clearTheForest.QuestCompletitionItems.Add(new QuestCompletitionItem(ItemByID(ITEM_ID_GOBLIN_EAR), 3));
+            clearTheForest.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_GOBLIN_EAR), 3));
             clearTheForest.RewardItem = ItemByID(ITEM_ID_HEALING_POTION);
 
             Quest antidote = new Quest(
                 QUEST_ID_ANTIDODE,
-                "The eye of madness",
-                "Hello traveler. I have a job for ya. I'm preparing and antidote for my dog that by accident ate snake chocolate. I can't leave home right now and I need `3 troll eye` to complete the antidote. I saw some trolls just around the Red Lake. I'll give you the `key` that open the `Cabin in the woods`, just South of the Red Forest and 20 gold", 20, 20);
+                " The Eye of Madness",
+                " Ian, The alchemist, asked me to help him with antidote for his dog.", 20, 20);
 
-            antidote.QuestCompletitionItems.Add(new QuestCompletitionItem(ItemByID(ITEM_ID_TROLL_EYE), 3));
+            antidote.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_TROLL_EYE), 3));
             antidote.RewardItem = ItemByID(ITEM_ID_THE_CABIN_IN_THE_WOODS_KEY);
 
             Quest killViktor = new Quest(
                 QUEST_ID_KILL_VIKTOR,
-                "Kill Viktor One Foot",
-                "The situation inside of Mini Dungeon is getting worse day by day. Viktor One Foot is sitting on the throne inside of the last room of the dungeon and his command is to take over of our amazing city, Compass House. Unfortunately the dungeon's infested by goblins, trolls and the 2 Viktor's guard: `Oliver The Chosen One` and `Luke The Gentle Giant`. He needs to be stopped ASAP to finally create our `New World`. Bring me Viktor's `toe`. Let's say that I'll give you 500 gold for the `toe` and..... you'll see! Good Luck!!", 50, 500);
+                " Kill Viktor One Foot",
+                " The hermit asked me to kill Viktor that is located in the last\n room inside of Mini Dungeon.", 50, 500);
 
-            killViktor.QuestCompletitionItems.Add(new QuestCompletitionItem(ItemByID(ITEM_ID_VIKTOR_BROKEN_TOE), 1));
+            killViktor.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_VIKTOR_BROKEN_TOE), 1));
             killViktor.RewardItem = ItemByID(ITEM_ID_THE_NEW_WORLD_CROWN);
 
             Quests.Add(clearTheForest);
@@ -192,12 +211,14 @@ namespace MiniDungeon
             Location compassHouse = new Location(LOCATION_ID_COMPASS_HOUSE, "Compass House Town", "Our majestic town made by nerds without social\n life. People like to spend most of their time\n programming and eating crisps Tyrell (cheese and\n onions).\n You can still smell the ash produced by our evil\n lord during the last session of Applied Science\n for Games!");
 
             Location theWhiteHorseTavern = new Location(LOCATION_ID_THE_WHITE_HORSE_TAVERN, "The White Horse Tavern", "There is a guy waiting at the counter, cleanig\n really shiny and already clean glasses.\n Quite empty for all day.\n Probably people in town are not interested to\n drink a pint of finest `dirty water`. Ah yeah,\n nerds life!");
+            theWhiteHorseTavern.NpcLivingHere = NPCbyID(NPC_ID_INNKEEPER);
             theWhiteHorseTavern.QuestAvailableHere = QuestbyID(QUEST_ID_CLEAR_THE_FOREST);
 
             Location redForest = new Location(LOCATION_ID_THE_RED_FOREST, "The Red Forest", "In the moment that you stepped in this forest,\n from far away, you can hear goblins screaming\n and swearing.");
             redForest.MonsterLivingHere = MonsterByID(MONSTER_ID_GOBLIN);
 
-            Location ianHouse = new Location(LOCATION_ID_IAN_HOUSE, "Ian, The Alchemist, house", "This amazing house is made by thousend of\n boardgames in limited edition. You can see even\n a Settles of Catan made by gold with a signature:\n from Viktor");
+            Location ianHouse = new Location(LOCATION_ID_IAN_HOUSE, "Ian, The Alchemist, house", "This amazing house is made by thousends of\n boardgames in limited edition. You can see even\n a Settles of Catan made by gold with a signature:\n from Viktor");
+            ianHouse.NpcLivingHere = NPCbyID(NPC_ID_IAN);
             ianHouse.QuestAvailableHere = QuestbyID(QUEST_ID_ANTIDODE);
 
             Location redLake = new Location(LOCATION_ID_THE_RED_LAKE, "The Red Lake", "An amazing lake full of life! Dangerous place\n without any armor!!");
@@ -206,6 +227,7 @@ namespace MiniDungeon
             Location nerdShrine = new Location(LOCATION_ID_THE_NERD_SHRINE, "The Nerd Shrine", "The amazing (only) pricey shop in town.\n You can smell the sweat after a 3 days session of\n Mini Dungeons and Wyverns");
 
             Location theCabinInTheWoods = new Location(LOCATION_ID_THE_CABIN_IN_THE_WOODS, "The Cabin in the Woods", "Mysterious cabin in the middle of nowhere.\n Sorrounded by dead trees and a strange timeless\n fog.", ItemByID(ITEM_ID_THE_CABIN_IN_THE_WOODS_KEY));
+            theCabinInTheWoods.NpcLivingHere = NPCbyID(NPC_ID_THE_HERMIT_IN_THE_WOODS);
             theCabinInTheWoods.QuestAvailableHere = QuestbyID(QUEST_ID_KILL_VIKTOR);
 
             Location miniDungeonEntrance = new Location(LOCATION_ID_MINI_DUNGEON_ENTRANCE, "Mini Dungeon Entrance", "The entrance of the Mini Dungeon with a gold\n plated door");
@@ -276,7 +298,19 @@ namespace MiniDungeon
             Locations.Add(miniDungeonThroneRoom);
         }
 
-        private static Monster MonsterByID(int id)
+        public static NPC NPCbyID(int id)
+        {
+            foreach (NPC npc in NPCs)
+            {
+                if (npc.ID == id)
+                {
+                    return npc;
+                }
+            }
+            return null; 
+        }
+
+        public static Monster MonsterByID(int id)
         {
             foreach (Monster monster in Monsters)
             {

@@ -14,7 +14,7 @@ namespace MiniDungeon
 
         public Item RewardItem { get; set; }
 
-        public List<QuestCompletitionItem> QuestCompletitionItems { get; set; }
+        public List<QuestCompletionItem> QuestCompletionItems { get; set; }
 
 
         public Quest(int id, string name, string description, int rewardExperiencePoints, int rewardGold)
@@ -25,7 +25,7 @@ namespace MiniDungeon
             RewardExperiencePoints = rewardExperiencePoints;
             RewardGold = rewardGold;
 
-            QuestCompletitionItems = new List<QuestCompletitionItem>();
+            QuestCompletionItems = new List<QuestCompletionItem>();
         }
     }
 }

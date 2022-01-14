@@ -4,12 +4,12 @@ using System.Text;
 
 namespace MiniDungeon
 {
-    public class QuestCompletitionItem
+    public class QuestCompletionItem
     {
         public Item Details { get; set; }
         public int Quantity { get; set; }
 
-        public QuestCompletitionItem(Item details, int quantity)
+        public QuestCompletionItem(Item details, int quantity)
         {
             Details = details;
             Quantity = quantity;
