@@ -56,6 +56,7 @@ namespace MiniDungeon
             {
                 int playerInput = 0;
 
+
                 Console.WriteLine("Insert Weapon ID:");
                 Console.Write(":> ");
                 while (!int.TryParse(Console.ReadLine(), out playerInput))
@@ -69,7 +70,8 @@ namespace MiniDungeon
                 {
                     if(playerInput == w.ID)
                     {
-                        //Weapon currentWeapon = w.ID;
+                        _player.MaximumDamage = w.MaximumDamage;
+                        _player.MinimumDamage = w.MinimumDamage;
                     }
                 }
             }

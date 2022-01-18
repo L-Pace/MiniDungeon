@@ -90,8 +90,8 @@ namespace MiniDungeon
 
         private static void PopulateItems()
         {
-            Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty Swords", 2.0f, 0, 5));
-            Items.Add(new Weapon(ITEM_ID_CLUB, "Club", "Clubs", 2.0f, 0, 7));
+            Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty Swords", 2.0f, 1, 5));
+            Items.Add(new Weapon(ITEM_ID_CLUB, "Club", "Clubs", 2.0f, 1, 7));
 
             Items.Add(new Weapon(ITEM_ID_THE_MIGHTY_SWORD_OF_THE_VOID, "The Mighty Sword of the Void", "The Maighty Swords of the Void", 50, 2, 10));
             Items.Add(new Weapon(ITEM_ID_THE_WAND_OF_FIRE, "The Wand of Fire", "The Wands of Fire", 5.0f, 2, 10));

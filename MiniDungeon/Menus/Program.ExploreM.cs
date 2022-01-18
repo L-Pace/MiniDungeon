@@ -53,7 +53,7 @@ namespace MiniDungeon
                     }
                     else if (playerInput == "i" || playerInput == "inventory")
                     {
-                        //InventoryMenu();
+                        _ = new InventoryM();
                     }
                     else if (playerInput == "o" || playerInput == "options")
                     {

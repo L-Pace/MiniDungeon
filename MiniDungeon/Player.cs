@@ -29,6 +29,10 @@ namespace MiniDungeon
 
         public PlayerClass playerClass { get; set; }
 
+        public int MinimumDamage { get; set; }
+
+        public int MinimumProtection { get; set; }
+
         public float Gold{ get; set; }
 
         public int ExperiencePoints { get; set; }
@@ -41,10 +45,22 @@ namespace MiniDungeon
 
         public List<PlayerQuest> Quests { get; set; }
 
-        public Player(int currentHitPoints, int maximumHitPoints, float gold, int experiencePoints, int level) : base(currentHitPoints, maximumHitPoints)
+        public Player(int currentHitPoints,
+                      int maximumHitPoints,
+                      int minimumDamage,
+                      int maximumDamage,
+                      int minimumProtection,
+                      int maximumProtection,
+                      float gold,
+                      int experiencePoints,
+                      int level
+                      ) : base(maximumDamage,maximumProtection,currentHitPoints, maximumHitPoints)
         {
             Inventory = new List<InventoryItem>();
             Quests = new List<PlayerQuest>();
+
+            MinimumDamage = minimumDamage;  
+            MinimumProtection = minimumProtection;
 
             Gold = gold;
             ExperiencePoints = experiencePoints;

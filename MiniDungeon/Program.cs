@@ -6,7 +6,7 @@ namespace MiniDungeon
     partial class Program
     {
 
-        private static Player _player = new Player(0, 0, 0, 0, 0);
+        private static Player _player = new Player(0, 0, 0, 0, 0, 0, 0, 0, 0);
         private static Character _character;
         private static Monster _currentMonster;
         private static List<Weapon> _weapons;
@@ -267,6 +267,7 @@ namespace MiniDungeon
             Console.Clear();
             Console.WriteLine(miniDungeonText);
             _character.PrintCharacter();
+            Console.WriteLine(_player.MaximumDamage);
             Console.WriteLine();
             Console.Write("[ENTER] to go back");
             Console.ReadKey();

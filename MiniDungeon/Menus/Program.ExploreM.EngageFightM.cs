@@ -21,7 +21,14 @@ namespace MiniDungeon
                     {
                         Monster standardMonster = World.MonsterByID(newLocation.MonsterLivingHere.ID);
 
-                        _currentMonster = new Monster(standardMonster.ID, standardMonster.Name, standardMonster.MaximumDamage, standardMonster.MaximumProtection, standardMonster.RewardExperiencePoints, standardMonster.RewardGold, standardMonster.CurrentHitPoints, standardMonster.MaximumHitPoints);
+                        _currentMonster = new Monster(standardMonster.ID,
+                                                      standardMonster.Name,
+                                                      standardMonster.MaximumDamage,
+                                                      standardMonster.MaximumProtection,
+                                                      standardMonster.RewardExperiencePoints,
+                                                      standardMonster.RewardGold,
+                                                      standardMonster.CurrentHitPoints,
+                                                      standardMonster.MaximumHitPoints);
 
                         foreach (LootItem lootItem in standardMonster.LootTable)
                         {
@@ -35,7 +42,6 @@ namespace MiniDungeon
 
                     //AddItemToRightList(_weapons, _armors, _healingPotions);
 
-
                     Console.Clear();
                     Console.WriteLine(miniDungeonText);
                     Console.WriteLine(fightText);
@@ -44,7 +50,7 @@ namespace MiniDungeon
                     Console.WriteLine("| (A)ttack | (I)nventory|");
                     Console.WriteLine("| (D)efend | (R)un away |");
                     Console.WriteLine("=========================");
-                    Console.WriteLine("| (B)ack |                         ");
+                    Console.WriteLine("| (B)ack |               ");
                     Console.Write(":> ");
                     playerInput = Console.ReadLine().ToLower();
 
@@ -66,6 +72,7 @@ namespace MiniDungeon
                     }
                     else if(playerInput == "b" || playerInput == "back")
                     {
+                        Console.Clear();
                         return;
                     }
                     else
@@ -78,8 +85,8 @@ namespace MiniDungeon
                 private static void AttackAction()
                 {
 
-                    //Weapon currentWeapon = ;
-
+                    
+                    
                 }
 
                 
