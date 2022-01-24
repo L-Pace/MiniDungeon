@@ -11,7 +11,7 @@ namespace MiniDungeon
             {
                 public EngageFightM()
                 {
-                    EngageFightMenu(_player.CurrentLocation);
+                    EngageFightMenu(_character.newPlayer.CurrentLocation);
                 }
                 private static void EngageFightMenu(Location newLocation)
                 {

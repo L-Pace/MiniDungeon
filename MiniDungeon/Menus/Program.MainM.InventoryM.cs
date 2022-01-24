@@ -56,7 +56,6 @@ namespace MiniDungeon
             {
                 int playerInput = 0;
 
-
                 Console.WriteLine("Insert Weapon ID:");
                 Console.Write(":> ");
                 while (!int.TryParse(Console.ReadLine(), out playerInput))
@@ -66,14 +65,15 @@ namespace MiniDungeon
                     Console.Write(":> ");
                 }
 
-                foreach(Weapon w in _weapons)
+                foreach (Weapon w in _weapons)
                 {
-                    if(playerInput == w.ID)
+                    if (playerInput == w.ID)
                     {
-                        _player.MaximumDamage = w.MaximumDamage;
-                        _player.MinimumDamage = w.MinimumDamage;
+                        _character.newPlayer.MaximumDamage = w.MaximumDamage;
+                        _character.newPlayer.MinimumDamage = w.MinimumDamage;
                     }
                 }
+                
             }
 
             private static void ShowInventory()
@@ -139,7 +139,7 @@ namespace MiniDungeon
                         Console.WriteLine("Value: " + a.Price + " gold");
                         Console.WriteLine("==================");
                         Console.WriteLine();
-                    } 
+                    }
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace MiniDungeon
                         Console.WriteLine("Heals " + hp.AmountToHeal + " HP");
                         Console.WriteLine("Value: " + hp.Price);
                         Console.WriteLine("=================");
-                    } 
+                    }
                 }
                 else
                 {
@@ -173,9 +173,9 @@ namespace MiniDungeon
             {
 
 
-                if (_player.Inventory.Count != 0)
+                if (_character.newPlayer.Inventory.Count != 0)
                 {
-                    foreach (InventoryItem ii in _player.Inventory)
+                    foreach (InventoryItem ii in _character.newPlayer.Inventory)
                     {
                         Console.WriteLine("=================");
                         Console.WriteLine("Name: " + ii.Details.Name);
@@ -190,9 +190,6 @@ namespace MiniDungeon
                 }
             }
         }
-
-
-
 
     }
 

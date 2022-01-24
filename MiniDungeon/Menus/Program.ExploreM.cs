@@ -23,13 +23,13 @@ namespace MiniDungeon
                     Console.WriteLine(miniDungeonText);
                     Console.WriteLine();
                     Console.WriteLine("*** CURRENT LOCATION ***");
-                    Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
+                    Console.WriteLine(" => " + _character.newPlayer.CurrentLocation.Name.ToString());
                     Console.WriteLine();
                     Console.WriteLine("*** INFO LOCATION ***");
                     Console.WriteLine("<-------------------------------------------------->");
-                    NPCLivingHereChecker(_player.CurrentLocation);
+                    NPCLivingHereChecker(_character.newPlayer.CurrentLocation);
                     Console.WriteLine();
-                    MonsterLivingHereChecker(_player.CurrentLocation);
+                    MonsterLivingHereChecker(_character.newPlayer.CurrentLocation);
                     Console.WriteLine("<-------------------------------------------------->");
                     Console.WriteLine();
                     Console.WriteLine("===================================");
@@ -44,7 +44,7 @@ namespace MiniDungeon
 
                     if (playerInput == "t" || playerInput == "talk")
                     {
-                        QuestChecker(_player.CurrentLocation);
+                        QuestChecker(_character.newPlayer.CurrentLocation);
                         exploreMenuLoop = false;
                     }
                     else if (playerInput == "e" || playerInput == "engage" || playerInput == "fight" || playerInput == "engage fight")
@@ -104,7 +104,7 @@ namespace MiniDungeon
                     bool playerAlreadyHasQuest = false;
                     bool playerAlreadyCompletedQuest = false;
 
-                    foreach (PlayerQuest playerQuest in _player.Quests)
+                    foreach (PlayerQuest playerQuest in _character.newPlayer.Quests)
                     {
                         if (playerQuest.Details.ID == newLocation.QuestAvailableHere.ID)
                         {
@@ -142,7 +142,7 @@ namespace MiniDungeon
                         {
                             bool foundItemInPlayersInventory = false;
 
-                            foreach (InventoryItem ii in _player.Inventory)
+                            foreach (InventoryItem ii in _character.newPlayer.Inventory)
                             {
                                 if (ii.Details.ID == qci.Details.ID)
                                 {
@@ -198,7 +198,7 @@ namespace MiniDungeon
 
                 foreach (QuestCompletionItem qci in newLocation.QuestAvailableHere.QuestCompletionItems)
                 {
-                    foreach (InventoryItem ii in _player.Inventory)
+                    foreach (InventoryItem ii in _character.newPlayer.Inventory)
                     {
                         if (ii.Details.ID == qci.Details.ID)
                         {
@@ -218,9 +218,9 @@ namespace MiniDungeon
 
                 bool addedItemToPlayerInventory = false;
 
-                for (int i = 0; i < _player.Inventory.Count; i++)
+                for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
                 {
-                    InventoryItem ii = _player.Inventory[i];
+                    InventoryItem ii = _character.newPlayer.Inventory[i];
                     if (ii.Details.ID == newLocation.QuestAvailableHere.RewardItem.ID)
                     {
                         ii.Quantity++;
@@ -231,10 +231,10 @@ namespace MiniDungeon
 
                     if (!addedItemToPlayerInventory)
                     {
-                        _player.Inventory.Add(new InventoryItem(newLocation.QuestAvailableHere.RewardItem, 1));
+                        _character.newPlayer.Inventory.Add(new InventoryItem(newLocation.QuestAvailableHere.RewardItem, 1));
                     }
 
-                    foreach (PlayerQuest pq in _player.Quests)
+                    foreach (PlayerQuest pq in _character.newPlayer.Quests)
                     {
                         if (pq.Details.ID == newLocation.QuestAvailableHere.ID)
                         {
@@ -285,7 +285,7 @@ namespace MiniDungeon
                 }
                 Console.WriteLine();
 
-                _player.Quests.Add(new PlayerQuest(newLocation.QuestAvailableHere));
+                _character.newPlayer.Quests.Add(new PlayerQuest(newLocation.QuestAvailableHere));
             }
 
             public static void TalkToNpc(Location newLocation)

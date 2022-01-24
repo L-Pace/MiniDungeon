@@ -12,6 +12,7 @@ namespace MiniDungeon
             {
                 MainMenu();
             }
+            #region menu1
             private static void MainMenu()
             {
                 string playerInput;
@@ -23,11 +24,11 @@ namespace MiniDungeon
                     Console.WriteLine(miniDungeonText);
                     Console.WriteLine();
                     Console.WriteLine("*** CURRENT LOCATION ***");
-                    Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
+                    Console.WriteLine(" => " + _character.newPlayer.CurrentLocation.Name.ToString());
                     Console.WriteLine();
                     Console.WriteLine("*** DESCRIPTION ***");
                     Console.WriteLine("<-------------------------------------------------->");
-                    Console.WriteLine(" " + _player.CurrentLocation.Description.ToString());
+                    Console.WriteLine(" " + _character.newPlayer.CurrentLocation.Description.ToString());
                     Console.WriteLine("<-------------------------------------------------->");
                     Console.WriteLine();
                     Console.WriteLine("==============================");
@@ -56,7 +57,7 @@ namespace MiniDungeon
                     else if (playerInput == "q" || playerInput == "quests" || playerInput == "quest")
                     {
 
-                        if (_player.Quests.Count != 0)
+                        if (_character.newPlayer.Quests.Count != 0)
                         {
                             ShowQuests();
                         }
@@ -94,6 +95,8 @@ namespace MiniDungeon
 
 
             }
+            #endregion
+
 
             private static void ShowQuests()
             {
@@ -101,7 +104,7 @@ namespace MiniDungeon
                 Console.WriteLine(miniDungeonText);
                 Console.WriteLine(questBookText);
                 Console.WriteLine();
-                foreach (PlayerQuest pq in _player.Quests)
+                foreach (PlayerQuest pq in _character.newPlayer.Quests)
                 {
                     Console.WriteLine("<====================================================================>");
                     Console.WriteLine("*** TITLE ***");
@@ -118,6 +121,8 @@ namespace MiniDungeon
                 Console.Write("[ENTER] to go back...");
                 Console.ReadKey();
             }
+
+            
         }
     }
 }

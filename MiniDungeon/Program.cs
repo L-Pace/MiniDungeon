@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace MiniDungeon
 {
     partial class Program
     {
-
-        private static Player _player = new Player(0, 0, 0, 0, 0, 0, 0, 0, 0);
+     
         private static Character _character;
         private static Monster _currentMonster;
         private static List<Weapon> _weapons;
@@ -104,6 +104,7 @@ namespace MiniDungeon
 
         private static void NewGame()
         {
+           
             _weapons = new List<Weapon>();
 
             _armors = new List<Armor>();
@@ -116,10 +117,10 @@ namespace MiniDungeon
 
             Console.WriteLine(miniDungeonText);
 
-            //Intro();
+            Intro();
 
-            _player.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
-            _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
+            _character.newPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
+            _character.newPlayer.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
 
             AddWeaponsToWeaponList(_weapons);
             AddArmorsToArmorList(_armors);
@@ -135,7 +136,7 @@ namespace MiniDungeon
 
         private static void AddWeaponsToWeaponList(List<Weapon> _weapons)
         {
-            foreach (InventoryItem ii in _player.Inventory)
+            foreach (InventoryItem ii in _character.newPlayer.Inventory)
             {
                 if (ii.Details.IsWeapon)
                 {
@@ -146,7 +147,7 @@ namespace MiniDungeon
 
         private static void AddArmorsToArmorList(List<Armor> _armors)
         {
-            foreach (InventoryItem ii in _player.Inventory)
+            foreach (InventoryItem ii in _character.newPlayer.Inventory)
             {
                 if (ii.Details.IsArmor)
                 {
@@ -157,7 +158,7 @@ namespace MiniDungeon
 
         private static void AddHealingPotionsToHealingPotionList(List<HealingPotion> _healingPotions)
         {
-            foreach (InventoryItem ii in _player.Inventory)
+            foreach (InventoryItem ii in _character.newPlayer.Inventory)
             {
                 if (ii.Details.IsHealingPotion)
                 {
@@ -170,12 +171,12 @@ namespace MiniDungeon
         {
             foreach(Weapon w in _weapons)
             {
-                for (int i = 0; i < _player.Inventory.Count; i++)
+                for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
                 {
-                    InventoryItem ii = _player.Inventory[i];
+                    InventoryItem ii = _character.newPlayer.Inventory[i];
                     if (w.ID == ii.Details.ID)
                     {
-                        _player.Inventory.Remove(ii);
+                        _character.newPlayer.Inventory.Remove(ii);
                     }
                 }
             }
@@ -185,12 +186,12 @@ namespace MiniDungeon
         {
             foreach (Armor a in _armors)
             {
-                for (int i = 0; i < _player.Inventory.Count; i++)
+                for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
                 {
-                    InventoryItem ii = _player.Inventory[i];
+                    InventoryItem ii = _character.newPlayer.Inventory[i];
                     if (a.ID == ii.Details.ID)
                     {
-                        _player.Inventory.Remove(ii);
+                        _character.newPlayer.Inventory.Remove(ii);
                     }
                 }
             }
@@ -200,12 +201,12 @@ namespace MiniDungeon
         {
             foreach(HealingPotion hp in _healingPotions)
             {
-                for (int i = 0; i < _player.Inventory.Count; i++)
+                for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
                 {
-                    InventoryItem ii = _player.Inventory[i];
+                    InventoryItem ii = _character.newPlayer.Inventory[i];
                     if (hp.ID == ii.Details.ID)
                     {
-                        _player.Inventory.Remove(ii);
+                        _character.newPlayer.Inventory.Remove(ii);
                     }
                 }
             }
@@ -266,8 +267,7 @@ namespace MiniDungeon
         {
             Console.Clear();
             Console.WriteLine(miniDungeonText);
-            _character.PrintCharacter();
-            Console.WriteLine(_player.MaximumDamage);
+            PrintCharacter();
             Console.WriteLine();
             Console.Write("[ENTER] to go back");
             Console.ReadKey();
@@ -282,7 +282,7 @@ namespace MiniDungeon
             Console.WriteLine(miniDungeonText);
             Console.WriteLine("==================================");
             Console.WriteLine("                MAP               ");
-            ShowAvailableLocations(_player.CurrentLocation);
+            ShowAvailableLocations(_character.newPlayer.CurrentLocation);
             Console.WriteLine("==================================");
             Console.WriteLine();
             Console.Write("[ENTER] to go back");
@@ -343,6 +343,25 @@ namespace MiniDungeon
             Console.WriteLine("          other people talking about Dyson Sphere Program! What the heck is going on in the Mini Dungeon?");
             Console.ReadKey();
             Console.Clear();
+
+        }
+
+        private static void PrintCharacter()
+        {
+            Console.WriteLine();
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine(" Name: " + _character.newPlayer.PlayerName);
+            Console.WriteLine(" Race: " + _character.newPlayer.playerRace.ToString());
+            Console.WriteLine(" Class: " + _character.newPlayer.playerClass.ToString());
+            Console.WriteLine(" Level: " + _character.newPlayer.Level);
+            Console.WriteLine(" Attack: " + _character.newPlayer.MinimumDamage + " - " + _character.newPlayer.MaximumDamage);
+            Console.WriteLine(" Defence: " + _character.newPlayer.MinimumProtection + " - " + _character.newPlayer.MaximumProtection);
+            Console.WriteLine(" Equip Weapon: " );
+            Console.WriteLine(" HP: " + _character.newPlayer.CurrentHitPoints);
+            Console.WriteLine(" Money: " + _character.newPlayer.Gold + " gold");
+            Console.WriteLine(" XP: " + _character.newPlayer.ExperiencePoints);
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~");
+
 
         }
     }

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace MiniDungeon
 {
-    class Character
+    public class Character
     {
 
-        public Player newPlayer = new Player(0, 0, 0, 0, 0, 0, 0, 0, 0); 
+        public Player newPlayer = new Player(0,0,0,0,0,0,0,0,0); 
 
         PlayerRace playerRace;
         PlayerClass playerClass;
@@ -360,20 +360,6 @@ namespace MiniDungeon
             }
         }
 
-        public void PrintCharacter()
-        {
-            Console.WriteLine();
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~");
-            Console.WriteLine(" Name: " + newPlayer.PlayerName);
-            Console.WriteLine(" Race: " + newPlayer.playerRace.ToString());
-            Console.WriteLine(" Class: " + newPlayer.playerClass.ToString());
-            Console.WriteLine(" Level: " + newPlayer.Level);
-            Console.WriteLine(" HP: " + newPlayer.CurrentHitPoints);
-            Console.WriteLine(" Money: " + newPlayer.Gold + " gold");
-            Console.WriteLine(" XP: " + newPlayer.ExperiencePoints);
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~");
-
-
-        }
+        
     }
 }

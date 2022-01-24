@@ -45,6 +45,7 @@ namespace MiniDungeon
 
         public List<PlayerQuest> Quests { get; set; }
 
+
         public Player(int currentHitPoints,
                       int maximumHitPoints,
                       int minimumDamage,
@@ -67,5 +68,6 @@ namespace MiniDungeon
             Level = level;
         }
 
+        
     }
 }

@@ -24,11 +24,11 @@ namespace MiniDungeon
                     Console.WriteLine(miniDungeonText);
                     Console.WriteLine();
                     Console.WriteLine("*** CURRENT LOCATION ***");
-                    Console.WriteLine(" => " + _player.CurrentLocation.Name.ToString());
+                    Console.WriteLine(" => " + _character.newPlayer.CurrentLocation.Name.ToString());
                     Console.WriteLine();
                     Console.WriteLine("==================================");
                     Console.WriteLine("               MAP                ");
-                    ShowAvailableLocations(_player.CurrentLocation);
+                    ShowAvailableLocations(_character.newPlayer.CurrentLocation);
                     Console.WriteLine("==================================");
                     Console.WriteLine();
                     Console.WriteLine("===============================");
@@ -47,10 +47,10 @@ namespace MiniDungeon
 
             private static bool MoveTo(string playerInput, bool moveMenuLoop)
             {
-                Location locationNorth = _player.CurrentLocation.LocationToNorth;
-                Location locationSouth = _player.CurrentLocation.LocationToSouth;
-                Location locationEast = _player.CurrentLocation.LocationToEast;
-                Location locationWest = _player.CurrentLocation.LocationToWest;
+                Location locationNorth = _character.newPlayer.CurrentLocation.LocationToNorth;
+                Location locationSouth = _character.newPlayer.CurrentLocation.LocationToSouth;
+                Location locationEast = _character.newPlayer.CurrentLocation.LocationToEast;
+                Location locationWest = _character.newPlayer.CurrentLocation.LocationToWest;
 
 
 
@@ -91,7 +91,7 @@ namespace MiniDungeon
                     if (newLocation.ItemRequiredToEnter != null)
                     {
                         bool playerHasItemToEnter = false;
-                        foreach (InventoryItem ii in _player.Inventory)
+                        foreach (InventoryItem ii in _character.newPlayer.Inventory)
                         {
                             if (ii.Details.ID == newLocation.ItemRequiredToEnter.ID)
                             {
@@ -114,9 +114,9 @@ namespace MiniDungeon
                         }
                         Console.Clear();
                     }
-                    _player.CurrentLocation = newLocation;
+                    _character.newPlayer.CurrentLocation = newLocation;
 
-                    _player.CurrentHitPoints = _player.MaximumHitPoints;
+                    _character.newPlayer.CurrentHitPoints = _character.newPlayer.MaximumHitPoints;
                 }
                 else
                 {
