@@ -148,12 +148,14 @@ namespace MiniDungeon
                                 {
                                     foundItemInPlayersInventory = true;
 
+                                    //ii.Quantity++;
+
                                     if (ii.Quantity < qci.Quantity)
                                     {
                                         playerHasAllItemsToCompleteQuest = false;
                                         break;
                                     }
-                                    break;
+                                    //break;
                                 }
                             }
                             if (!foundItemInPlayersInventory)

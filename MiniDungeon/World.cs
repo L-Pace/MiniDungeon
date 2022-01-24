@@ -139,10 +139,10 @@ namespace MiniDungeon
             Monster oliver = new Monster(MONSTER_ID_OLIVER, "Oliver the Chosen One", 7, 7, 5, 20, 5, 5);
             oliver.LootTable.Add(new LootItem(ItemByID(ITEM_ID_OLIVER_PONYTAIL), 75, true));
             oliver.LootTable.Add(new LootItem(ItemByID(ITEM_ID_OLIVER_BRAIN), 25, false));
-            oliver.LootTable.Add(new LootItem(ItemByID(ITEM_ID_THRONE_ROOM_KEY), 100, true));
+            oliver.LootTable.Add(new LootItem(ItemByID(ITEM_ID_THRONE_ROOM_KEY), 75, true));
 
             Monster luke = new Monster(MONSTER_ID_LUKE, "Luke The Gentle Giant", 8, 8, 6, 25, 7, 7);
-            luke.LootTable.Add(new LootItem(ItemByID(ITEM_ID_LUKE_BEARD), 75, true));
+            luke.LootTable.Add(new LootItem(ItemByID(ITEM_ID_LUKE_BEARD), 100, true));
             luke.LootTable.Add(new LootItem(ItemByID(ITEM_ID_LUKE_MASK), 25, false));
             luke.LootTable.Add(new LootItem(ItemByID(ITEM_ID_MINI_DUNGEON_KEY), 100, true));
 
@@ -150,7 +150,7 @@ namespace MiniDungeon
             viktor.LootTable.Add(new LootItem(ItemByID(ITEM_ID_VIKTOR_GLASSES), 75, false));
             viktor.LootTable.Add(new LootItem(ItemByID(ITEM_ID_VIKTOR_DOUBLE_MASK), 75, false));
             viktor.LootTable.Add(new LootItem(ItemByID(ITEM_ID_VIKTOR_GAMEPASS), 25, false));
-            viktor.LootTable.Add(new LootItem(ItemByID(ITEM_ID_VIKTOR_BROKEN_TOE), 75, true));
+            viktor.LootTable.Add(new LootItem(ItemByID(ITEM_ID_VIKTOR_BROKEN_TOE), 100, true));
 
             Monsters.Add(goblin);
             Monsters.Add(troll);

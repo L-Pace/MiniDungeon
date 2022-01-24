@@ -117,7 +117,7 @@ namespace MiniDungeon
 
             Console.WriteLine(miniDungeonText);
 
-            Intro();
+            //Intro();
 
             _character.newPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
             _character.newPlayer.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
