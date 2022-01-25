@@ -123,10 +123,13 @@ namespace MiniDungeon
                                 Console.ReadKey();
                                 playerAlreadyCompletedQuest = true;
                             }
+
+
+
                         }
                     }
-
                     PlayerAlreadyHasQuest(newLocation, playerAlreadyHasQuest, playerAlreadyCompletedQuest);
+
                 }
             }
 
@@ -140,24 +143,16 @@ namespace MiniDungeon
 
                         foreach (QuestCompletionItem qci in newLocation.QuestAvailableHere.QuestCompletionItems)
                         {
-                            bool foundItemInPlayersInventory = false;
-
+                            int itemsCount = 0;
                             foreach (InventoryItem ii in _character.newPlayer.Inventory)
                             {
                                 if (ii.Details.ID == qci.Details.ID)
                                 {
-                                    foundItemInPlayersInventory = true;
-
-                                    //ii.Quantity++;
-
-                                    if (ii.Quantity < qci.Quantity)
-                                    {
-                                        playerHasAllItemsToCompleteQuest = false;
-                                        break;
-                                    }
-                                    //break;
+                                    itemsCount += ii.Quantity;
                                 }
                             }
+
+                            bool foundItemInPlayersInventory = itemsCount >= qci.Quantity;
                             if (!foundItemInPlayersInventory)
                             {
                                 playerHasAllItemsToCompleteQuest = false;

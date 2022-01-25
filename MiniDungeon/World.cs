@@ -161,11 +161,29 @@ namespace MiniDungeon
 
         private static void PopulateNPC()
         {
-            NPC ian = new NPC(NPC_ID_IAN, "Ian, the Alchemist", " Hello traveler. I'm Ian, the Alchemist.\n I have a job for ya. I'm preparing an antidote for my dog that by\n accident ate snake chocolate.\n I can't leave home right now and I need `3 trolls eye` to complete the\n antidote.\n I saw some trolls just around the Red Lake.\n If you'll help me I'll give you the `key` that open the `Cabin in the\n woods`, just South of the Red Forest and 20 gold.", "I need the ingredients ASAP or my dog will make a mess for at least 3 days in a row!", " Thank you for your help!\n This is your reward and good luck for your adventure!", "I'm quite busy preparing the antidote for my dog! Thank you again for your help! See you around!");
+            NPC ian = new NPC(
+                NPC_ID_IAN,
+                "Ian, the Alchemist",
+                " Hello traveler. I'm Ian, the Alchemist.\n I have a job for ya. I'm preparing an antidote for my dog that by\n accident ate snake chocolate.\n I can't leave home right now and I need `3 trolls eye` to complete the\n antidote.\n I saw some trolls just around the Red Lake.\n If you'll help me I'll give you the `key` that open the `Cabin in the\n woods`, just South of the Red Forest and 20 gold.",
+                "I need the ingredients ASAP or my dog will make a mess for at least 3 days in a row!",
+                " Thank you for your help!\n This is your reward and good luck for your adventure!",
+                "I'm quite busy preparing the antidote for my dog! Thank you again for your help! See you around!");
 
-            NPC innkeeper = new NPC(NPC_ID_INNKEEPER, " James, the innkeeper", " Are you looking for a job? Fine...Kill the goblins that infesting the\n Red Forest\n and bring back `3 goblins ears`.\n I'll give you an healing potion and, of course, 15 golds!", "The goblins are still alive? I think it's not a big deal kill\n some annoying goblins, right? Come back with the ears!", "Hope the goblins didn't give you hard time! This is your reward!", "All day cleaning already clean glasses. What's the point to have a business in this town?\n FOR THE GLORY!!\n [A glass crash in his hands] I need a medic...");
+            NPC innkeeper = new NPC(
+                NPC_ID_INNKEEPER,
+                " James, the innkeeper",
+                " Are you looking for a job? Fine...Kill the goblins that infesting the\n Red Forest\n and bring back `3 goblins ears`.\n I'll give you an healing potion and, of course, 15 golds!",
+                "The goblins are still alive? I think it's not a big deal kill\n some annoying goblins, right? Come back with the ears!",
+                "Hope the goblins didn't give you hard time! This is your reward!",
+                "All day cleaning already clean glasses. What's the point to have a business in this town?\n FOR THE GLORY!!\n [A glass crash in his hands] I need a medic...");
 
-            NPC hermit = new NPC(NPC_ID_THE_HERMIT_IN_THE_WOODS, "Dominuque, the hermit in the woods", " Hello Traveler.\n The situation inside of Mini Dungeon is getting worse day by day.\n Viktor One Foot is sitting on the throne inside of the last room of\n the dungeon and his command is to take over of our amazing city:\n Compass House.\n Unfortunately the dungeon's infested by goblins, trolls and 2 Viktor's\n guard: `Oliver The Chosen One` and `Luke The Gentle Giant`.\n He needs to be stopped ASAP to finally create our `New World`.\n Bring me Viktor's `toe`.\n Let's say that I'll give you 500 gold for the `toe` and..... you'll\n see! Good Luck!!", " Where is Viktor's toe? Still on his foot? Go back in the Mini Dungeon and defeat him!!!", "Congratulation my new Lord! Now we'll rebuild our new world! The Mini Dungeon is now in our hands and you'll be my muppet! Now you're in my dominion! Death and diseases will be upon Compass House, Cambridge Town and all the lands surrounding us.........ehm of course I'm joking. We'll refubrish the Mini Dungeon and we'll open again the museum.", "Dominique disappeared and he left this message:\n `I'm away for holidays in New Castle`. I'll be back in few years!");
+            NPC hermit = new NPC(
+                NPC_ID_THE_HERMIT_IN_THE_WOODS,
+                "Dominuque, the hermit in the woods",
+                " Hello Traveler.\n The situation inside of Mini Dungeon is getting worse day by day.\n Viktor One Foot is sitting on the throne inside of the last room of\n the dungeon and his command is to take over of our amazing city:\n Compass House.\n Unfortunately the dungeon's infested by goblins, trolls and 2 Viktor's\n guard: `Oliver The Chosen One` and `Luke The Gentle Giant`.\n He needs to be stopped ASAP to finally create our `New World`.\n Bring me Viktor's `toe`.\n Let's say that I'll give you 500 gold for the `toe` and..... you'll\n see! Good Luck!!",
+                " Where is Viktor's toe? Still on his foot? Go back in the Mini Dungeon and defeat him!!!",
+                "Congratulation my new Lord! Now we'll rebuild our new world! The Mini Dungeon is now in our hands and you'll be my muppet! Now you're in my dominion! Death and diseases will be upon Compass House, Cambridge Town and all the lands surrounding us.........ehm of course I'm joking. We'll refubrish the Mini Dungeon and we'll open again the museum.",
+                "Dominique disappeared and he left this message:\n `I'm away for holidays in New Castle`. I'll be back in few years!");
 
             NPCs.Add(ian);
             NPCs.Add(innkeeper);
