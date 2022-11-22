@@ -356,7 +356,7 @@ namespace MiniDungeon
             Console.WriteLine(" Level: " + _character.newPlayer.Level);
             Console.WriteLine(" Attack: " + _character.newPlayer.MinimumDamage + " - " + _character.newPlayer.MaximumDamage);
             Console.WriteLine(" Defence: " + _character.newPlayer.MinimumProtection + " - " + _character.newPlayer.MaximumProtection);
-            Console.WriteLine(" Equip Weapon: " );
+            Console.WriteLine(" Equip Weapon: ");
             Console.WriteLine(" HP: " + _character.newPlayer.CurrentHitPoints);
             Console.WriteLine(" Money: " + _character.newPlayer.Gold + " gold");
             Console.WriteLine(" XP: " + _character.newPlayer.ExperiencePoints);

@@ -11,9 +11,9 @@ namespace MiniDungeon
             {
                 public EngageFightM()
                 {
-                    EngageFightMenu(_character.newPlayer.CurrentLocation);
+                    EngageFightInCurrentLocation(_character.newPlayer.CurrentLocation);
                 }
-                private static void EngageFightMenu(Location newLocation)
+                private static void EngageFightInCurrentLocation(Location newLocation)
                 {
                     string playerInput;
 
@@ -42,6 +42,11 @@ namespace MiniDungeon
 
                     //AddItemToRightList(_weapons, _armors, _healingPotions);
 
+                    EngageFightMenu();
+                }
+
+                private static void EngageFightMenu()
+                {
                     Console.Clear();
                     Console.WriteLine(miniDungeonText);
                     Console.WriteLine(fightText);
@@ -52,7 +57,7 @@ namespace MiniDungeon
                     Console.WriteLine("=========================");
                     Console.WriteLine("| (B)ack |               ");
                     Console.Write(":> ");
-                    playerInput = Console.ReadLine().ToLower();
+                    string playerInput = Console.ReadLine().ToLower();
 
                     if (playerInput == "a" || playerInput == "attack")
                     {
@@ -81,57 +86,93 @@ namespace MiniDungeon
                     }
                 }
 
-
                 private static void AttackAction()
                 {
+                    int damageToMonester = RandomNumberGenerator.NumberBetween(_character.newPlayer.MinimumDamage,
+                                                                               _character.newPlayer.MaximumDamage);
+                    _currentMonster.CurrentHitPoints -= damageToMonester;
 
-                    int damageToMonster = RandomNumberGenerator.NumberBetween(_character.newPlayer.MinimumDamage, _character.newPlayer.MaximumDamage);
+                    Console.WriteLine("You hit " + _currentMonster.Name + " for " + damageToMonester.ToString() + " points");
 
-                    _currentMonster.CurrentHitPoints -= damageToMonster;
-
-                    Console.WriteLine("You hit " + _currentMonster.Name + " for " + damageToMonster.ToString() + " points.");
+                    Console.WriteLine("The " + _currentMonster.Name + " has " + _currentMonster.CurrentHitPoints + " HP left.");
+                    Console.ReadKey();
 
                     if (_currentMonster.CurrentHitPoints <= 0)
                     {
-                        Console.WriteLine("You defeted the " + _currentMonster.Name);
-                        Console.WriteLine("You receive " + _currentMonster.RewardExperiencePoints.ToString() + " experience points.");
+                        Console.WriteLine("The " + _currentMonster.Name + " is dead!");
+                        _character.newPlayer.ExperiencePoints += _currentMonster.RewardExperiencePoints;
+                        Console.WriteLine("You receive " + _currentMonster.RewardExperiencePoints.ToString() + " XP");
 
-                        _character.newPlayer.ExperiencePoints += _currentMonster.RewardGold;
+                        _character.newPlayer.Gold += _currentMonster.RewardGold;
+                        Console.WriteLine("You receive " + _currentMonster.RewardGold.ToString() + " gold!");
 
-                        Console.WriteLine("You receive " + _currentMonster.RewardGold.ToString() + " golds");
-
-                        List<InventoryItem> lootedItems = new List<InventoryItem>();
+                        List<InventoryItem> lootedItem = new List<InventoryItem>();
 
                         foreach (LootItem lootItem in _currentMonster.LootTable)
                         {
                             if (RandomNumberGenerator.NumberBetween(1, 100) <= lootItem.DropPercentage)
                             {
-                                _character.newPlayer.Inventory.Add(new InventoryItem(lootItem.Details, 1));
-                                AddWeaponsToWeaponList(_weapons);
-                                AddArmorsToArmorList(_armors);
-                                AddHealingPotionsToHealingPotionList(_healingPotions);
 
-                                RemoveWeaponsFromPlayerInventory();
-                                RemoveArmorsFromPlayerInventory();
-                                RemoveHealingPotionsFromPlayerInventory();
+                                lootedItem.Add(new InventoryItem(lootItem.Details, 1));
                             }
                         }
-                        if (lootedItems.Count == 0)
+
+                        if (lootedItem.Count == 0)
                         {
                             foreach (LootItem lootItem in _currentMonster.LootTable)
                             {
                                 if (lootItem.IsDefaultItem)
                                 {
-                                    _character.newPlayer.Inventory.Add(new InventoryItem(lootItem.Details, 1));
+                                    lootedItem.Add(new InventoryItem(lootItem.Details, 1));
                                 }
                             }
                         }
+
+                        foreach (InventoryItem inventoryItem in lootedItem)
+                        {
+                            _character.newPlayer.Inventory.Add(new InventoryItem(inventoryItem.Details, 1));
+
+                            AddWeaponsToWeaponList(_weapons);
+                            AddArmorsToArmorList(_armors);
+
+                            RemoveArmorsFromPlayerInventory();
+                            RemoveWeaponsFromPlayerInventory();
+
+                            if (inventoryItem.Quantity == 1)
+                            {
+                                Console.WriteLine("You loot " + inventoryItem.Quantity.ToString() + " " + inventoryItem.Details.Name);
+                            }
+                            else
+                            {
+                                Console.WriteLine("You loot " + inventoryItem.Quantity.ToString() + " " + inventoryItem.Details.Name);
+                            }
+                        }
+
+                        Console.ReadKey();
                     }
+                    else
+                    {
+                        int damageToPlayer = RandomNumberGenerator.NumberBetween(0, _currentMonster.MaximumDamage);
 
+                        Console.WriteLine("The " + _currentMonster.Name + " inflicted you " + damageToPlayer + " damage points!");
 
+                        _character.newPlayer.CurrentHitPoints -= damageToPlayer;
+
+                        Console.ReadKey();
+
+                        if (_character.newPlayer.CurrentHitPoints <= 0)
+                        {
+                            Console.WriteLine("The " + _currentMonster.Name + " killed you!");
+
+                            Console.ReadKey();
+                            _character.newPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
+                        }
+                        else
+                        {
+                            EngageFightMenu();
+                        }
+                    }
                 }
-
-
             }
         }
     }
