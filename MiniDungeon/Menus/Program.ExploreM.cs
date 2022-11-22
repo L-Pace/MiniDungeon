@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MiniDungeon
 {
@@ -123,10 +124,13 @@ namespace MiniDungeon
                                 Console.ReadKey();
                                 playerAlreadyCompletedQuest = true;
                             }
+
+
+
                         }
                     }
-
                     PlayerAlreadyHasQuest(newLocation, playerAlreadyHasQuest, playerAlreadyCompletedQuest);
+
                 }
             }
 
@@ -140,22 +144,16 @@ namespace MiniDungeon
 
                         foreach (QuestCompletionItem qci in newLocation.QuestAvailableHere.QuestCompletionItems)
                         {
-                            bool foundItemInPlayersInventory = false;
-
+                            int itemsCount = 0;
                             foreach (InventoryItem ii in _character.newPlayer.Inventory)
                             {
                                 if (ii.Details.ID == qci.Details.ID)
                                 {
-                                    foundItemInPlayersInventory = true;
-
-                                    if (ii.Quantity < qci.Quantity)
-                                    {
-                                        playerHasAllItemsToCompleteQuest = false;
-                                        break;
-                                    }
-                                    break;
+                                    itemsCount += ii.Quantity;
                                 }
                             }
+
+                            bool foundItemInPlayersInventory = itemsCount >= qci.Quantity;
                             if (!foundItemInPlayersInventory)
                             {
                                 playerHasAllItemsToCompleteQuest = false;
@@ -216,23 +214,13 @@ namespace MiniDungeon
                 Console.WriteLine("Item: " + newLocation.QuestAvailableHere.RewardItem.Name);
                 Console.WriteLine();
 
-                bool addedItemToPlayerInventory = false;
+                _character.newPlayer.Inventory.Add(new InventoryItem(newLocation.QuestAvailableHere.RewardItem, 1));
+
+                RemoveItemsCompletedQuest(_character.newPlayer.Inventory, newLocation.QuestAvailableHere.QuestCompletionItems);
 
                 for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
+
                 {
-                    InventoryItem ii = _character.newPlayer.Inventory[i];
-                    if (ii.Details.ID == newLocation.QuestAvailableHere.RewardItem.ID)
-                    {
-                        ii.Quantity++;
-
-                        addedItemToPlayerInventory = true;
-                        break;
-                    }
-
-                    if (!addedItemToPlayerInventory)
-                    {
-                        _character.newPlayer.Inventory.Add(new InventoryItem(newLocation.QuestAvailableHere.RewardItem, 1));
-                    }
 
                     foreach (PlayerQuest pq in _character.newPlayer.Quests)
                     {
@@ -246,6 +234,22 @@ namespace MiniDungeon
                 }
                 Console.Write("[ENTER] to continue...");
                 Console.ReadKey();
+            }
+
+            private static void RemoveItemsCompletedQuest(List<InventoryItem> inventoryItem, List<QuestCompletionItem> questCompletionItems)
+            {
+                for (int i = 0; i < inventoryItem.Count; i++)
+                {
+                    foreach (QuestCompletionItem qci in questCompletionItems)
+                    {
+                        InventoryItem ii = inventoryItem[i];
+                        if (ii.Details.ID == qci.Details.ID)
+                        {
+                            _character.newPlayer.Inventory.Remove(ii);
+                        }
+
+                    }
+                }
             }
 
             private static void AcceptedQuest(Location newLocation)
