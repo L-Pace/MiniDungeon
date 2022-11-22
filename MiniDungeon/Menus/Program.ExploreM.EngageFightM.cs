@@ -45,6 +45,9 @@ namespace MiniDungeon
                     EngageFightMenu();
                 }
 
+                /// <summary>
+                /// Engage Fight Menu
+                /// </summary>
                 private static void EngageFightMenu()
                 {
                     Console.Clear();
