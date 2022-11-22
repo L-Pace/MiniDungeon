@@ -88,7 +88,6 @@ namespace MiniDungeon
 
                 private static void AttackAction()
                 {
-
                     int damageToMonester = RandomNumberGenerator.NumberBetween(_character.newPlayer.MinimumDamage,
                                                                                _character.newPlayer.MaximumDamage);
                     _currentMonster.CurrentHitPoints -= damageToMonester;
@@ -113,6 +112,7 @@ namespace MiniDungeon
                         {
                             if (RandomNumberGenerator.NumberBetween(1, 100) <= lootItem.DropPercentage)
                             {
+
                                 lootedItem.Add(new InventoryItem(lootItem.Details, 1));
                             }
                         }
