@@ -6,12 +6,13 @@ namespace MiniDungeon
 {
     partial class Program
     {
-     
+
         private static Character _character;
         private static Monster _currentMonster;
         private static List<Weapon> _weapons;
         private static List<Armor> _armors;
         private static List<HealingPotion> _healingPotions;
+
 
         private static string welcomeText = @"
 ▒█░░▒█ █▀▀ █░░ █▀▀ █▀▀█ █▀▄▀█ █▀▀ 　 ▀▀█▀▀ █▀▀█ 
@@ -31,6 +32,23 @@ namespace MiniDungeon
 ██─▄████─██─██▄─█─▄─███─███
 ▀▄▄▄▀▀▀▄▄▄▀▄▄▄▄▄▀▄▀▄▀▀▄▄▄▀▀";
 
+        private static string victoryText = @"
+██╗░░░██╗██╗░█████╗░████████╗░█████╗░██████╗░██╗░░░██╗
+██║░░░██║██║██╔══██╗╚══██╔══╝██╔══██╗██╔══██╗╚██╗░██╔╝
+╚██╗░██╔╝██║██║░░╚═╝░░░██║░░░██║░░██║██████╔╝░╚████╔╝░
+░╚████╔╝░██║██║░░██╗░░░██║░░░██║░░██║██╔══██╗░░╚██╔╝░░
+░░╚██╔╝░░██║╚█████╔╝░░░██║░░░╚█████╔╝██║░░██║░░░██║░░░
+░░░╚═╝░░░╚═╝░╚════╝░░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░";
+
+        private static string deadText = @"        
+██╗░░░██╗░█████╗░██╗░░░██╗  ░█████╗░██████╗░███████╗  ██████╗░███████╗░█████╗░██████╗░
+╚██╗░██╔╝██╔══██╗██║░░░██║  ██╔══██╗██╔══██╗██╔════╝  ██╔══██╗██╔════╝██╔══██╗██╔══██╗
+░╚████╔╝░██║░░██║██║░░░██║  ███████║██████╔╝█████╗░░  ██║░░██║█████╗░░███████║██║░░██║
+░░╚██╔╝░░██║░░██║██║░░░██║  ██╔══██║██╔══██╗██╔══╝░░  ██║░░██║██╔══╝░░██╔══██║██║░░██║
+░░░██║░░░╚█████╔╝╚██████╔╝  ██║░░██║██║░░██║███████╗  ██████╔╝███████╗██║░░██║██████╔╝
+░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝  ╚═════╝░╚══════╝╚═╝░░╚═╝╚═════╝░";
+
+
         private static string questBookText = @"
 █▀█ █░█ █▀▀ █▀ ▀█▀   █▄▄ █▀█ █▀█ █▄▀
 ▀▀█ █▄█ ██▄ ▄█ ░█░   █▄█ █▄█ █▄█ █░█";
@@ -40,12 +58,29 @@ namespace MiniDungeon
 █ █░▀█ ▀▄▀ ██▄ ░█░ █▄█ █▀▄ ░█░";
 
 
+        private static string gameOverText = @"████████╗██╗░░██╗░█████╗░███╗░░██╗██╗░░██╗  ██╗░░░██╗░█████╗░██╗░░░██╗  ███████╗░█████╗░██████╗░
+╚══██╔══╝██║░░██║██╔══██╗████╗░██║██║░██╔╝  ╚██╗░██╔╝██╔══██╗██║░░░██║  ██╔════╝██╔══██╗██╔══██╗
+░░░██║░░░███████║███████║██╔██╗██║█████═╝░  ░╚████╔╝░██║░░██║██║░░░██║  █████╗░░██║░░██║██████╔╝
+░░░██║░░░██╔══██║██╔══██║██║╚████║██╔═██╗░  ░░╚██╔╝░░██║░░██║██║░░░██║  ██╔══╝░░██║░░██║██╔══██╗
+░░░██║░░░██║░░██║██║░░██║██║░╚███║██║░╚██╗  ░░░██║░░░╚█████╔╝╚██████╔╝  ██║░░░░░╚█████╔╝██║░░██║
+░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝  ░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚═╝░░░░░░╚════╝░╚═╝░░╚═╝
+
+██████╗░██╗░░░░░░█████╗░██╗░░░██╗██╗███╗░░██╗░██████╗░
+██╔══██╗██║░░░░░██╔══██╗╚██╗░██╔╝██║████╗░██║██╔════╝░
+██████╔╝██║░░░░░███████║░╚████╔╝░██║██╔██╗██║██║░░██╗░
+██╔═══╝░██║░░░░░██╔══██║░░╚██╔╝░░██║██║╚████║██║░░╚██╗
+██║░░░░░███████╗██║░░██║░░░██║░░░██║██║░╚███║╚██████╔╝
+╚═╝░░░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░";
+
+
         static void Main(string[] args)
         {
 
 
             bool mainLoop = true;
             int playerChoice = 0;
+
+            //The starting screen of the game
 
             Console.WriteLine(welcomeText);
             Console.WriteLine(miniDungeonText);
@@ -102,9 +137,12 @@ namespace MiniDungeon
             }
         }
 
+        /// <summary>
+        /// Start a new game
+        /// </summary>
         private static void NewGame()
         {
-           
+
             _weapons = new List<Weapon>();
 
             _armors = new List<Armor>();
@@ -117,10 +155,15 @@ namespace MiniDungeon
 
             Console.WriteLine(miniDungeonText);
 
-            //Intro();
-
+            //Set the player to the initial location
             _character.newPlayer.CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME);
-            _character.newPlayer.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
+
+            //Add to player inventory the first 2 basic piece: a weapon and an armor 
+            _character.newPlayer.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_THE_MIGHTY_WOODEN_STICK), 1));
+            _character.newPlayer.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_THE_MIGHTY_USELESS_CLOTHES), 1));
+            _character.newPlayer.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_HEALING_POTION), 1));
+
+            Intro();
 
             AddWeaponsToWeaponList(_weapons);
             AddArmorsToArmorList(_armors);
@@ -134,17 +177,26 @@ namespace MiniDungeon
 
         }
 
+        /// <summary>
+        /// Check if the inventory item is a weapon and it's adding the weapon to the weapon list
+        /// </summary>
+        /// <param name="_weapons">List of weapons</param>
         private static void AddWeaponsToWeaponList(List<Weapon> _weapons)
         {
             foreach (InventoryItem ii in _character.newPlayer.Inventory)
             {
                 if (ii.Details.IsWeapon)
                 {
-                    _weapons.Add((Weapon)ii.Details);   
-                }   
+                    _weapons.Add((Weapon)ii.Details);
+                }
+
             }
         }
 
+        /// <summary>
+        /// Check if the inventory item is an armor and it's adding the armor to the armor list
+        /// </summary>
+        /// <param name="_armors">List of armors</param>
         private static void AddArmorsToArmorList(List<Armor> _armors)
         {
             foreach (InventoryItem ii in _character.newPlayer.Inventory)
@@ -156,6 +208,11 @@ namespace MiniDungeon
             }
         }
 
+        /// <summary>
+        /// Check if the inventory item is a healing potion and it's adding the healing potion to 
+        /// the healing potions list
+        /// </summary>
+        /// <param name="_healingPotions">List of healing potions</param>
         private static void AddHealingPotionsToHealingPotionList(List<HealingPotion> _healingPotions)
         {
             foreach (InventoryItem ii in _character.newPlayer.Inventory)
@@ -167,9 +224,12 @@ namespace MiniDungeon
             }
         }
 
+        /// <summary>
+        /// Remove the weapons from the generic player inventory list
+        /// </summary>
         private static void RemoveWeaponsFromPlayerInventory()
         {
-            foreach(Weapon w in _weapons)
+            foreach (Weapon w in _weapons)
             {
                 for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
                 {
@@ -182,6 +242,9 @@ namespace MiniDungeon
             }
         }
 
+        /// <summary>
+        /// Remove the armors from the generic player inventory list 
+        /// </summary>
         private static void RemoveArmorsFromPlayerInventory()
         {
             foreach (Armor a in _armors)
@@ -197,9 +260,12 @@ namespace MiniDungeon
             }
         }
 
+        /// <summary>
+        /// Remove the healing potions from the generic player inventory list 
+        /// </summary>
         private static void RemoveHealingPotionsFromPlayerInventory()
         {
-            foreach(HealingPotion hp in _healingPotions)
+            foreach (HealingPotion hp in _healingPotions)
             {
                 for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
                 {
@@ -213,7 +279,10 @@ namespace MiniDungeon
         }
 
 
-
+        /// <summary>
+        /// Show on the console all the available locations
+        /// </summary>
+        /// <param name="currentLocation"></param>
         private static void ShowAvailableLocations(Location currentLocation)
         {
             if (currentLocation.LocationToNorth != null)
@@ -253,6 +322,9 @@ namespace MiniDungeon
             }
         }
 
+        /// <summary>
+        /// Message for the wrong path
+        /// </summary>
         private static void WrongPathMessage()
         {
             Console.Clear();
@@ -263,6 +335,9 @@ namespace MiniDungeon
             Console.Clear();
         }
 
+        /// <summary>
+        /// Player Stats
+        /// </summary>
         private static void ShowPlayer()
         {
             Console.Clear();
@@ -274,7 +349,9 @@ namespace MiniDungeon
             Console.Clear();
         }
 
-
+        /// <summary>
+        /// Show the map on console
+        /// </summary>
         private static void ShowMap()
         {
             Console.Clear();
@@ -290,6 +367,9 @@ namespace MiniDungeon
             Console.Clear();
         }
 
+        /// <summary>
+        /// Invalid input message
+        /// </summary>
         private static void InvalidInput()
         {
             Console.Clear();
@@ -300,6 +380,9 @@ namespace MiniDungeon
             Console.Clear();
         }
 
+        /// <summary>
+        /// The intro of the game from a Narrator
+        /// </summary>
         private static void Intro()
         {
             Console.WriteLine();
@@ -341,26 +424,40 @@ namespace MiniDungeon
             Console.ReadKey();
             Console.WriteLine("Narrator: Some rumors saying that he's locked inside, eating and playing a game: someone said that is called New World ");
             Console.WriteLine("          other people talking about Dyson Sphere Program! What the heck is going on in the Mini Dungeon?");
+            Console.WriteLine("Narrator: Take this weapon and this clothes, maybe they will help you during your journey.");
+            Console.WriteLine("          Don't forget to equip them from your inventory!");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine(miniDungeonText);
+            Console.WriteLine();
+            Console.WriteLine("Weapon acquired: The Mighty Wooden Stick");
+            Console.WriteLine("Armor acquired: The Mighty Useless Clothes");
+            Console.WriteLine();
+            Console.Write("[ENTER] to continue...");
             Console.ReadKey();
             Console.Clear();
 
         }
 
+        /// <summary>
+        /// Details of the stats of the player
+        /// </summary>
         private static void PrintCharacter()
         {
             Console.WriteLine();
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine(" Name: " + _character.newPlayer.PlayerName);
             Console.WriteLine(" Race: " + _character.newPlayer.playerRace.ToString());
             Console.WriteLine(" Class: " + _character.newPlayer.playerClass.ToString());
             Console.WriteLine(" Level: " + _character.newPlayer.Level);
-            Console.WriteLine(" Attack: " + _character.newPlayer.MinimumDamage + " - " + _character.newPlayer.MaximumDamage);
-            Console.WriteLine(" Defence: " + _character.newPlayer.MinimumProtection + " - " + _character.newPlayer.MaximumProtection);
-            Console.WriteLine(" Equip Weapon: ");
+            Console.WriteLine(" Attack: " + _character.newPlayer.ClassMinimumDamage + " - " + _character.newPlayer.ClassMaximumDamage + " (" + _character.newPlayer.MinimumDamage + " - " + _character.newPlayer.MaximumDamage + ")");
+            Console.WriteLine(" Defence: " + _character.newPlayer.ClassMinimumProtection + " - " + _character.newPlayer.ClassMaximumProtection + " (" + _character.newPlayer.MinimumProtection + " - " + _character.newPlayer.MaximumProtection + ")");
+            Console.WriteLine(" Equip Weapon: " + _character.newPlayer.CurrentWeapon);
+            Console.WriteLine(" Equip Armor: " + _character.newPlayer.CurrentArmor);
             Console.WriteLine(" HP: " + _character.newPlayer.CurrentHitPoints);
             Console.WriteLine(" Money: " + _character.newPlayer.Gold + " gold");
             Console.WriteLine(" XP: " + _character.newPlayer.ExperiencePoints);
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
         }

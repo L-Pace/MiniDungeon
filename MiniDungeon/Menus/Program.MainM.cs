@@ -5,14 +5,23 @@ namespace MiniDungeon
 {
     partial class Program
     {
+
+        /// <summary>
+        /// Main menu class
+        /// </summary>
         public partial class MainM
         {
-
+            /// <summary>
+            /// Main Menu` contructor
+            /// </summary>
             public MainM()
             {
                 MainMenu();
             }
             #region menu1
+            /// <summary>
+            /// Main Menu` Method that shows some options for the player (Move somewhere, Explore, the inventory, Quest book and player stats)
+            /// </summary>
             private static void MainMenu()
             {
                 string playerInput;
@@ -84,6 +93,7 @@ namespace MiniDungeon
                     }
                     else if (playerInput == "o" || playerInput == "options")
                     {
+                        // This menu` supposed to be the option menu` with the save system. 
                         //OptionsMenu();
                     }
                     else
@@ -97,7 +107,9 @@ namespace MiniDungeon
             }
             #endregion
 
-
+            /// <summary>
+            /// Show all the quest accepted and the status of them
+            /// </summary>
             private static void ShowQuests()
             {
                 Console.Clear();

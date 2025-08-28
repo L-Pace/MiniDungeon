@@ -4,10 +4,13 @@ using System.Text;
 
 namespace MiniDungeon
 {
+    /// <summary>
+    /// Class Character
+    /// </summary>
     public class Character
     {
-
-        public Player newPlayer = new Player(0,0,0,0,0,0,0,0,0); 
+        // Creation of the new player
+        public Player newPlayer = new Player(0, 0, 0, 0, 0, 0, "", "", 0, 0, 0, 0, 0, 0, 0); 
 
         PlayerRace playerRace;
         PlayerClass playerClass;
@@ -30,12 +33,16 @@ namespace MiniDungeon
 █ █▄░█ █▀▀ █▀█   █▀▀ █░░ ▄▀█ █▀ █▀
 █ █░▀█ █▀░ █▄█   █▄▄ █▄▄ █▀█ ▄█ ▄█";
 
-
+        /// <summary>
+        /// Character class constructor
+        /// </summary>
         public Character()
         {
             CreateCharacter();
         }
-
+        /// <summary>
+        /// Creation of a new character with fixed stats for gold, xp and starting from level 1
+        /// </summary>
         public void CreateCharacter()
         {
             newPlayer.Gold = 20.0f;
@@ -46,6 +53,10 @@ namespace MiniDungeon
             InsertPlayerClass();
         }
 
+        /// <summary>
+        /// The player choose the class with modifiers 
+        /// </summary>
+        /// <returns></returns>
         private bool InsertPlayerClass()
         {
             int playerClassInt = 0;
@@ -88,9 +99,7 @@ namespace MiniDungeon
                             {
                                 newPlayer.playerClass = playerClass;
                                 WarriorClassModifier();
-                                insertLoop = false;
-                                
-                                
+                                insertLoop = false;   
                             }
                             break;
 
@@ -101,8 +110,7 @@ namespace MiniDungeon
                                 newPlayer.playerClass = playerClass;
                                 MageClassModifier();
 
-                                insertLoop = false;
-                                
+                                insertLoop = false;  
                             }
                             break;
 
@@ -146,6 +154,9 @@ namespace MiniDungeon
             return insertLoop;
         }
 
+        /// <summary>
+        /// Shows the info of each class that the player can choose
+        /// </summary>
         private void ShowInfoClasses()
         {
             Console.Clear();
@@ -188,42 +199,46 @@ namespace MiniDungeon
         {
             newPlayer.CurrentHitPoints = 10;
             newPlayer.MaximumHitPoints = 10;
-            newPlayer.MinimumDamage = 0;
-            newPlayer.MaximumDamage = 3;
-            newPlayer.MinimumProtection = 0;
-            newPlayer.MaximumProtection = 3;
+            newPlayer.ClassMinimumDamage = 0;
+            newPlayer.ClassMaximumDamage = 1;
+            newPlayer.ClassMinimumProtection = 0;
+            newPlayer.ClassMaximumProtection = 2;
         }
 
         private void PaladinClassModifier()
         {
             newPlayer.CurrentHitPoints = 20;
             newPlayer.MaximumHitPoints = 20;
-            newPlayer.MinimumDamage = 0;
-            newPlayer.MaximumDamage = 3;
-            newPlayer.MinimumProtection = 1;
-            newPlayer.MaximumProtection = 4;
+            newPlayer.ClassMinimumDamage = 0;
+            newPlayer.ClassMaximumDamage = 2;
+            newPlayer.ClassMinimumProtection = 1;
+            newPlayer.ClassMaximumProtection = 3;
         }
 
         private void MageClassModifier()
         {
             newPlayer.CurrentHitPoints = 15;
             newPlayer.MaximumHitPoints = 15;
-            newPlayer.MinimumDamage = 0;
-            newPlayer.MaximumDamage = 3;
-            newPlayer.MinimumProtection = 0;
-            newPlayer.MaximumProtection = 3;
+            newPlayer.ClassMinimumDamage = 0;
+            newPlayer.ClassMaximumDamage = 2;
+            newPlayer.ClassMinimumProtection = 0;
+            newPlayer.ClassMaximumProtection = 2;
         }
 
         private void WarriorClassModifier()
         {
             newPlayer.CurrentHitPoints = 20;
             newPlayer.MaximumHitPoints = 20;
-            newPlayer.MinimumDamage = 0;
-            newPlayer.MaximumDamage = 3;
-            newPlayer.MinimumProtection = 1;
-            newPlayer.MaximumProtection = 4;
+            newPlayer.ClassMinimumDamage = 0;
+            newPlayer.ClassMaximumDamage = 2;
+            newPlayer.ClassMinimumProtection = 1;
+            newPlayer.ClassMaximumProtection = 3;
         }
 
+        /// <summary>
+        /// The player choose the Race
+        /// </summary>
+        /// <returns></returns>
         private bool InsertPlayerRace()
         {
             int playerRaceInt = 0;
@@ -308,6 +323,10 @@ namespace MiniDungeon
             return insertLoop;
         }
 
+        /// <summary>
+        /// The player choose the name
+        /// </summary>
+        /// <returns></returns>
         private bool InsertPlayerName()
         {
             bool insertLoop = true;
@@ -332,6 +351,11 @@ namespace MiniDungeon
             return insertLoop;
         }
 
+        /// <summary>
+        /// Confirmation method
+        /// </summary>
+        /// <param name="playerInput">The player input</param>
+        /// <returns></returns>
         private bool GetConfirmation(string playerInput)
         {
             string response;

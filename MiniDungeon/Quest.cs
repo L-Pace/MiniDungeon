@@ -16,7 +16,14 @@ namespace MiniDungeon
 
         public List<QuestCompletionItem> QuestCompletionItems { get; set; }
 
-
+        /// <summary>
+        /// Quest contructor
+        /// </summary>
+        /// <param name="id">Quest ID</param>
+        /// <param name="name">Quest Name</param>
+        /// <param name="description">Quest Description</param>
+        /// <param name="rewardExperiencePoints">Experience points that the player acquire</param>
+        /// <param name="rewardGold">Gold reward</param>
         public Quest(int id, string name, string description, int rewardExperiencePoints, int rewardGold)
         {
             ID = id;

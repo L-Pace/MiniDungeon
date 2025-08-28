@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MiniDungeon
 {
@@ -12,19 +13,22 @@ namespace MiniDungeon
                 ExploreMenu();
             }
 
+            /// <summary>
+            /// This menu` is redirecting the player on Talk with NPC, Engage a Fight with a monster. The player can have a look on their inventory and the stats as well
+            /// </summary>
             private static void ExploreMenu()
             {
                 string playerInput;
                 bool exploreMenuLoop = true;
 
-                Console.Clear();
 
                 while (exploreMenuLoop)
                 {
+                    Console.Clear();
                     Console.WriteLine(miniDungeonText);
                     Console.WriteLine();
                     Console.WriteLine("*** CURRENT LOCATION ***");
-                    Console.WriteLine(" => " + _character.newPlayer.CurrentLocation.Name.ToString());
+                    Console.WriteLine(" =>" + _character.newPlayer.CurrentLocation.Name.ToString());
                     Console.WriteLine();
                     Console.WriteLine("*** INFO LOCATION ***");
                     Console.WriteLine("<-------------------------------------------------->");
@@ -50,11 +54,22 @@ namespace MiniDungeon
                     }
                     else if (playerInput == "e" || playerInput == "engage" || playerInput == "fight" || playerInput == "engage fight")
                     {
-                        _ = new EngageFightM();
+                        if (_character.newPlayer.CurrentLocation.MonsterLivingHere != null)
+                        {
+                            _ = new EngageFightM();
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                     else if (playerInput == "i" || playerInput == "inventory")
                     {
                         _ = new InventoryM();
+                    }
+                    else if (playerInput == "p" || playerInput == "player" || playerInput == "show player")
+                    {
+                        ShowPlayer();
                     }
                     else if (playerInput == "o" || playerInput == "options")
                     {
@@ -71,8 +86,11 @@ namespace MiniDungeon
                 }
 
             }
-
-
+            
+            /// <summary>
+            /// Check if in the current location there are NPCs
+            /// </summary>
+            /// <param name="newLocation">Ref to the location of the player</param>
             public static void NPCLivingHereChecker(Location newLocation)
             {
                 if (newLocation.NpcLivingHere != null)
@@ -85,6 +103,10 @@ namespace MiniDungeon
                 }
             }
 
+            /// <summary>
+            /// Check if in the current location there are Monsters
+            /// </summary>
+            /// <param name="newLocation">Ref to the location of the player</param>
             public static void MonsterLivingHereChecker(Location newLocation)
             {
                 if (newLocation.MonsterLivingHere != null)
@@ -97,7 +119,10 @@ namespace MiniDungeon
                 }
             }
 
-
+            /// <summary>
+            /// Check if in the current location are available quests
+            /// </summary>
+            /// <param name="newLocation">Ref to the location of the player</param>
             private static void QuestChecker(Location newLocation)
             {
                 if (newLocation.QuestAvailableHere != null)
@@ -113,16 +138,24 @@ namespace MiniDungeon
 
                             if (playerQuest.IsCompleted)
                             {
-                                Console.Clear();
-                                Console.WriteLine(miniDungeonText);
-                                Console.WriteLine();
-                                Console.WriteLine(newLocation.NpcLivingHere.Name);
-                                Console.WriteLine();
-                                Console.WriteLine(newLocation.NpcLivingHere.Dialogue);
-                                Console.WriteLine();
-                                Console.Write("[Enter] to go back...");
-                                Console.ReadKey();
-                                playerAlreadyCompletedQuest = true;
+                                if(playerQuest.IsCompleted && playerQuest.Details.ID == 3)
+                                {
+                                    Console.WriteLine(gameOverText);
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine(miniDungeonText);
+                                    Console.WriteLine();
+                                    Console.WriteLine(newLocation.NpcLivingHere.Name);
+                                    Console.WriteLine();
+                                    Console.WriteLine(newLocation.NpcLivingHere.Dialogue);
+                                    Console.WriteLine();
+                                    Console.Write("[Enter] to go back...");
+                                    Console.ReadKey();
+                                    playerAlreadyCompletedQuest = true; 
+                                }
                             }
 
 
@@ -132,8 +165,19 @@ namespace MiniDungeon
                     PlayerAlreadyHasQuest(newLocation, playerAlreadyHasQuest, playerAlreadyCompletedQuest);
 
                 }
+                else
+                {
+                    //_ = new ShopM();
+                }
             }
 
+            /// <summary>
+            /// Check if the player already accepted the quest and, if the player has the item/s in their inventory 
+            /// the quest is completed
+            /// </summary>
+            /// <param name="newLocation">Ref to current location of the player</param>
+            /// <param name="playerAlreadyHasQuest"></param>
+            /// <param name="playerAlreadyCompletedQuest"></param>
             private static void PlayerAlreadyHasQuest(Location newLocation, bool playerAlreadyHasQuest, bool playerAlreadyCompletedQuest)
             {
                 if (playerAlreadyHasQuest)
@@ -185,6 +229,10 @@ namespace MiniDungeon
                 }
             }
 
+            /// <summary>
+            /// This method is giving the reward to the player after that the quest has been completed
+            /// </summary>
+            /// <param name="newLocation">Current Location </param>
             private static void QuestCompleted(Location newLocation)
             {
                 Console.Clear();
@@ -218,6 +266,14 @@ namespace MiniDungeon
 
                 RemoveItemsCompletedQuest(_character.newPlayer.Inventory, newLocation.QuestAvailableHere.QuestCompletionItems);
 
+                AddWeaponsToWeaponList(_weapons);
+                AddArmorsToArmorList(_armors);
+                AddHealingPotionsToHealingPotionList(_healingPotions);
+
+                RemoveWeaponsFromPlayerInventory();
+                RemoveArmorsFromPlayerInventory();
+                RemoveHealingPotionsFromPlayerInventory();
+
                 for (int i = 0; i < _character.newPlayer.Inventory.Count; i++)
 
                 {
@@ -236,6 +292,11 @@ namespace MiniDungeon
                 Console.ReadKey();
             }
 
+            /// <summary>
+            /// Removes the quest item/s from player inventory
+            /// </summary>
+            /// <param name="inventoryItem">Ref to the inventory item</param>
+            /// <param name="questCompletionItems">Ref to the item/s required to complete the quest</param>
             private static void RemoveItemsCompletedQuest(List<InventoryItem> inventoryItem, List<QuestCompletionItem> questCompletionItems)
             {
                 for (int i = 0; i < inventoryItem.Count; i++)
@@ -252,6 +313,10 @@ namespace MiniDungeon
                 }
             }
 
+            /// <summary>
+            /// This method is giving the player a summary of the accepted quest 
+            /// </summary>
+            /// <param name="newLocation">Current location of the player</param>
             private static void AcceptedQuest(Location newLocation)
             {
                 TalkToNpc(newLocation);
@@ -292,6 +357,10 @@ namespace MiniDungeon
                 _character.newPlayer.Quests.Add(new PlayerQuest(newLocation.QuestAvailableHere));
             }
 
+            /// <summary>
+            /// Talk with an NPC and in case there a quest available the player can accept or not
+            /// </summary>
+            /// <param name="newLocation"></param>
             public static void TalkToNpc(Location newLocation)
             {
                 string playerInput;
@@ -320,6 +389,51 @@ namespace MiniDungeon
                     else
                     {
                         InvalidInput();
+                    }
+                }
+            }
+
+            static void DrinkHealingPotion()
+            {
+                int playerInput = 0;
+
+                Console.WriteLine("Insert Healing Potion ID:");
+                Console.Write(":> ");
+                while (!int.TryParse(Console.ReadLine(), out playerInput))
+                {
+                    Console.WriteLine("Invalid input! Try again!");
+                    Console.WriteLine("Insert Armor ID:");
+                    Console.Write(":> ");
+                }
+
+                foreach (HealingPotion h in _healingPotions.ToList())
+                {
+                    if (playerInput == h.ID)
+                    {
+                        _character.newPlayer.CurrentHitPoints += h.AmountToHeal;
+                        if (_character.newPlayer.CurrentHitPoints > _character.newPlayer.MaximumHitPoints)
+                        {
+                            _character.newPlayer.CurrentHitPoints += h.AmountToHeal;
+                            _character.newPlayer.CurrentHitPoints = _character.newPlayer.MaximumHitPoints;
+                            RemoveHealingPotionFromHealingPotionList(h.ID);
+                        }
+                        else
+                        {
+                            _character.newPlayer.CurrentHitPoints += h.AmountToHeal;
+                            RemoveHealingPotionFromHealingPotionList(h.ID);
+                        }
+                    }
+                }
+            }
+
+            private static void RemoveHealingPotionFromHealingPotionList(int id)
+            {
+                foreach (HealingPotion h in _healingPotions.ToList())
+                {
+                    var healingPotionToRemove = _healingPotions.SingleOrDefault(r => r.ID == id);
+                    if (healingPotionToRemove != null)
+                    {
+                        _healingPotions.Remove(healingPotionToRemove);
                     }
                 }
             }

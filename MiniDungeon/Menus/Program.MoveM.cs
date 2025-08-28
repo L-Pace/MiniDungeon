@@ -5,12 +5,22 @@ namespace MiniDungeon
 {
     partial class Program
     {
+        /// <summary>
+        /// Class Move Menu
+        /// </summary>
         public class MoveM
         {
+            /// <summary>
+            /// Constructor
+            /// </summary>
             public MoveM()
             {
                 MoveMenu();
             }
+
+            /// <summary>
+            /// Move Menu` method
+            /// </summary>
             private static void MoveMenu()
             {
                 string playerInput;
@@ -19,6 +29,7 @@ namespace MiniDungeon
 
                 Console.Clear();
 
+                // Show the current location and the map
                 while (moveMenuLoop)
                 {
                     Console.WriteLine(miniDungeonText);
@@ -45,6 +56,12 @@ namespace MiniDungeon
                 }
             }
 
+            /// <summary>
+            /// Move the player to a direction
+            /// </summary>
+            /// <param name="playerInput">Ref to where the player wants to go</param>
+            /// <param name="moveMenuLoop">Bool for the Move menu loop</param>
+            /// <returns></returns>
             private static bool MoveTo(string playerInput, bool moveMenuLoop)
             {
                 Location locationNorth = _character.newPlayer.CurrentLocation.LocationToNorth;
@@ -83,7 +100,12 @@ namespace MiniDungeon
                 return moveMenuLoop;
             }
   
-
+            /// <summary>
+            /// This method is checking if in that location the player needs an item to enter
+            /// </summary>
+            /// <param name="newLocation">Current Location</param>
+            /// <param name="moveMenuLoop">Bool for the move menu loop</param>
+            /// <returns></returns>
             private static bool ItemRequiredChecker(Location newLocation, bool moveMenuLoop)
             {
                 if (newLocation != null)
